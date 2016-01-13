@@ -1,6 +1,6 @@
 #!/bin/sh
 
-TILE_VERSION=OPS_MGR_VERSION
+TILE_VERSION=1.5
 TILE_NAME=Ecs-Broker-Experimental
 TILE_FILE=`pwd`/*tile-v${TILE_VERSION}.yml
 RELEASE_TARFILE=`pwd`/releases/*/*.tgz

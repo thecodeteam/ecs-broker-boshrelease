@@ -1,0 +1,53 @@
+properties:
+  # EDIT ME -- change the domain names
+  domain: 10.244.0.34.xip.io
+  app_domains: 10.244.0.34.xip.io
+  uaa:
+    clients:
+      ecs_broker:
+        secret: 'test'
+  ssl:
+    skip_cert_verify: true
+  ecs_broker:
+    encryption_key: 'test'
+    # EDIT ME -- Change the app name and URI as needed
+    app_name: EcsServiceBroker
+    app_version: v1
+    app_uri: ecs-broker
+    create_open_security_group: false
+    ### CUSTOM_VARIABLE_MANIFEST_BEGIN_MARKER
+    ### CUSTOM_VARIABLE_MANIFEST_END_MARKER
+
+    app_push:
+      memory: 512
+      org_quota: 1024
+      timeout: 180
+    # Set the persistence type to 'mysql' for using my sql instance to store data
+    # Set the persistence type to 'custom' for using custom db (non-my sql) instance to store data
+    # Set the persistence type to 'none' if its all in-memory
+    persistence_store_type: none
+
+    #
+    # EDIT ME - remove if there are no On-Demand Plans that need to be created
+    ### ON_DEMAND_PLAN_BEGIN_MARKER
+    on_demand_service_plans:
+    - guid: 0ab34def-7d2f-4ff0-bfe7-62b5946cf9d1
+      plan_name: Standard
+      plan_description: default plan for target services
+      #plan_details: "init_size| 50| mb initial size of tablespace;\r\nmax_size|
+      #    500|  mb max size of tablespace;\r\nconnections| 5| max number of concurrent
+      #    connections"
+      plan_details: "init_size: 50: mb initial size of tablespace;\r\nmax_size:
+          500:  mb max size of tablespace;\r\nconnections: 5: max number of concurrent
+          connections"
+    ### ON_DEMAND_PLAN_END_MARKER
+
+    cf:
+      admin_user: admin
+      admin_password: admin
+    broker:
+      user: testuser
+      password: testuser
+      # EDIT ME - These are supposed to refer to inbuilt plans which needs to be made public accessible from the Broker
+      internal_service_names: "ecs-bucket"
+

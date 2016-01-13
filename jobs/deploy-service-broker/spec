@@ -46,40 +46,12 @@ properties:
 
   ### CUSTOM_VARIABLE_END_MARKER
 
-  ### DRIVER_DOWNLOAD_BEGIN_MARKER
-  ecs_broker.driver_download_url:
-    description: 'Download url for drivers needed by the Service Broker Application'
-  ### DRIVER_DOWNLOAD_END_MARKER
 
   ecs_broker.persistence_store_type:
     description: 'Use MySQL or custom DB for persistence store'
     default: none
 
-  ### PERSISTENCE_STORE_BEGIN_MARKER
-  ecs_broker.persistence_store.service_addr:
-    description: 'Host Addr and port of custom persistence store'
-  ecs_broker.persistence_store.service_sid:
-    description: 'Service name of custom persistence store'
-  ecs_broker.persistence_store.service_params:
-    description: 'Other parameters for connecting to the custom persistence store'
-  ecs_broker.persistence_store.persistence_broker_user:
-    description: 'User id for connecting to the store'
-  ecs_broker.persistence_store.persistence_broker_password:
-    description: 'Password for connecting to the store'
-  ### PERSISTENCE_STORE_END_MARKER
 
-  ### TARGET_SERVICE_BEGIN_MARKER
-  ecs_broker.target_service.service_addr:
-    description: 'Host Addr and port of target service'
-  ecs_broker.target_service.service_sid:
-    description: 'Service name of target service'
-  ecs_broker.target_service.service_params:
-    description: 'Other parameters for connecting to the target service'
-  ecs_broker.target_service.target_admin_user:
-    description: 'User id for managing the target service'
-  ecs_broker.target_service.target_admin_password:
-    description: 'Password for managing the target service'
-  ### TARGET_SERVICE_END_MARKER
 
   ### ON_DEMAND_PLAN_BEGIN_MARKER
   ecs_broker.on_demand_service_plans:

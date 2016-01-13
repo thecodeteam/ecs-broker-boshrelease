@@ -41,29 +41,12 @@ export APP_PUSH_MEMORY=<%= properties.ecs_broker.app_push.memory %>
 
 # Use this only if app needs additional libraries that need to be downloaded
 #
-### DRIVER_DOWNLOAD_BEGIN_MARKER
-export DRIVER_DOWNLOAD_URL=<%= properties.ecs_broker.driver_download_url %>
-### DRIVER_DOWNLOAD_END_MARKER
 
 # Use these variables only if app needs to persistence store for saving its plans/sevice offerings etc.
 export PERSISTENCE_STORE_TYPE=<%= properties.ecs_broker.persistence_store_type %>
 
-### PERSISTENCE_STORE_BEGIN_MARKER
-export PERSISTENCE_STORE_HOST=<%= properties.ecs_broker.persistence_store.service_addr %>
-export PERSISTENCE_STORE_SID=<%= properties.ecs_broker.persistence_store.service_sid %>
-export PERSISTENCE_STORE_PARAMS=<%= properties.ecs_broker.persistence_store.service_params %>
-export PERSISTENCE_STORE_USER=<%= properties.ecs_broker.persistence_store.persistence_broker_user %>
-export PERSISTENCE_STORE_PASSWD=<%= properties.ecs_broker.persistence_store.persistence_broker_password %>
-### PERSISTENCE_STORE_END_MARKER
 
 # Use these variables only if app needs to know how to connect to a remote target that it brokers
-### TARGET_SERVICE_BEGIN_MARKER
-export TARGET_HOST=<%= properties.ecs_broker.target_service.service_addr %>
-export TARGET_SID=<%= properties.ecs_broker.target_service.service_sid %>
-export TARGET_PARAMS=<%= properties.ecs_broker.target_service.service_params %>
-export TARGET_ADMIN_USER=<%= properties.ecs_broker.target_service.target_admin_user %>
-export TARGET_ADMIN_PASSWD=<%= properties.ecs_broker.target_service.target_admin_password %>
-### TARGET_SERVICE_END_MARKER
 
 export BROKER_NAME=${APP_NAME}-${APP_VERSION}-service-broker
 export BROKER_USER=<%= properties.ecs_broker.broker.user %>

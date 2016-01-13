@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # For use to create final release tarball
-VERSION=RELEASE_VERSION
+VERSION=1.5
 CREATE_FINAL_TARBALL=true
 RELEASE_NAME=ecs_broker
 
