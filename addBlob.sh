@@ -3,8 +3,8 @@
 function usage() {
   echo "Error!! Needs 2 arguments: <Path to Blob file> <Directory or folder under ./blobs to save it>"
   echo ""
-  echo "Example: ./addBlob.sh my-service-broker.jar generic-service-broker "
-  echo "This would add the 'my-service-broker.jar' as blob under 'blobs/generic-service-broker' "
+  echo "Example: ./addBlob.sh my-service-broker.jar ecs-service-broker "
+  echo "This would add the 'my-service-broker.jar' as blob under 'blobs/ecs-service-broker' "
   echo ""
 }
 

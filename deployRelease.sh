@@ -4,12 +4,12 @@
 CLEAN_UP=true
 
 # For use to create final release tarball
-RELEASE_NAME=generic_broker
+RELEASE_NAME=ecs_broker
 
-DEPLOYMENT_NAME=generic_broker
+DEPLOYMENT_NAME=ecs_broker
 DEPLOYMENT_PLATFORM=warden
 #DEPLOYMENT_PLATFORM=vsphere
-DEPLOYMENT_MANIFEST=`pwd`/generic-broker-${DEPLOYMENT_PLATFORM}-manifest.yml
+DEPLOYMENT_MANIFEST=`pwd`/ecs-broker-${DEPLOYMENT_PLATFORM}-manifest.yml
 
 if [ "$CLEAN_UP" == "true" ]; then
   bosh deployment $DEPLOYMENT_MANIFEST

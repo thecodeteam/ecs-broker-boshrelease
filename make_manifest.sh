@@ -2,7 +2,7 @@
 
 set -e
 
-template_prefix="generic-broker"
+template_prefix="ecs-broker"
 
 infrastructure=$1
 STEMCELL_OS=${STEMCELL_OS:-ubuntu}
@@ -83,7 +83,7 @@ perl -pi -e "s/STEMCELL/$STEMCELL/g" $tmpdir/stub-with-uuid.yml
 spiff merge \
   $templates/deployment.yml \
   $templates/jobs.yml \
-  $templates/generic-broker-properties.yml \
+  $templates/ecs-broker-properties.yml \
   $templates/infrastructure-${infrastructure}.yml \
   $tmpdir/stub-with-uuid.yml \
   $* > $tmpdir/$NAME-manifest.yml

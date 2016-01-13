@@ -4,7 +4,7 @@ function usage() {
   echo "Error!! needs 1 argument: <Name of Blob file> "
   echo ""
   echo "Example: ./removeBlob.sh my-service-broker.jar"
-  echo "This would remove all references to the 'my-service-broker.jar' from 'blobs/generic-service-broker', 'config/blobs.yml' and .blobs folder "
+  echo "This would remove all references to the 'my-service-broker.jar' from 'blobs/ecs-service-broker', 'config/blobs.yml' and .blobs folder "
   echo ""
 }
 

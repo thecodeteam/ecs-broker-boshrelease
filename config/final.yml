@@ -2,5 +2,5 @@
 blobstore:
   provider: local
   options:
-    blobstore_path: /tmp/generic_broker-blobs
-final_name: generic_broker_blobstore
+    blobstore_path: /tmp/ecs_broker-blobs
+final_name: ecs_broker_blobstore

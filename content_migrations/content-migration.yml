@@ -1,5 +1,5 @@
 ---
-product: generic_broker
+product: ecs_broker
 installation_version: '1.5'
 to_version: 1.5.0
 migrations:

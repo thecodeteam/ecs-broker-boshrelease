@@ -5,14 +5,14 @@ meta:
   security_groups:
     - default
   job_templates:
-    - name: generic_broker
-      release: generic_broker
+    - name: ecs_broker
+      release: ecs_broker
   stemcell:
     name: STEMCELL
 
 director_uuid: PLACEHOLDER-DIRECTOR-UUID
 releases:
-  - name: generic_broker
+  - name: ecs_broker
     version: latest
 properties:
-  generic_broker: {}
+  ecs_broker: {}

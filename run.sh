@@ -4,8 +4,8 @@
 # Use '_' for release and deployment names as ruby can trip on '-'
 TARGET_PLATFORM=warden
 #TARGET_PLATFORM=vsphere
-RELEASE_NAME=generic_broker
-DEPLOYMENT_NAME=generic-broker-${TARGET_PLATFORM}
+RELEASE_NAME=ecs_broker
+DEPLOYMENT_NAME=ecs-broker-${TARGET_PLATFORM}
 
 echo "Running against bosh target platform $TARGET_PLATFORM"
 echo "Please create the manifest using ./make_manifest.sh <platform> before proceeding with full deploy"

@@ -3,7 +3,7 @@
 # For use to create final release tarball
 VERSION=RELEASE_VERSION
 CREATE_FINAL_TARBALL=true
-RELEASE_NAME=generic_broker
+RELEASE_NAME=ecs_broker
 
 echo "Cleanup previous release ..."
 rm -rf releases/* .dev_builds/* .final_builds/*

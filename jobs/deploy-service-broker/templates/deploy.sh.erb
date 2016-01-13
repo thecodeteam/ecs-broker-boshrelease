@@ -18,14 +18,14 @@ set -e -x
 export PATH="/var/vcap/packages/cf_cli/bin:$PATH"
 
 export SCHEME=https
-export ADMIN_USER=<%= properties.generic_broker.cf.admin_user %>
-export ADMIN_PASSWORD=<%= properties.generic_broker.cf.admin_password %>
+export ADMIN_USER=<%= properties.ecs_broker.cf.admin_user %>
+export ADMIN_PASSWORD=<%= properties.ecs_broker.cf.admin_password %>
 export DOMAIN=<%= properties.domain %>
 export APP_DOMAIN=<%="#{app_domain}"%>
 export API_ENDPOINT=$SCHEME://api.${DOMAIN}
-export APP_NAME=<%= properties.generic_broker.app_name %>
-export APP_VERSION=<%= properties.generic_broker.app_version %>
-export APP_URI=<%= properties.generic_broker.app_uri %>
+export APP_NAME=<%= properties.ecs_broker.app_name %>
+export APP_VERSION=<%= properties.ecs_broker.app_version %>
+export APP_URI=<%= properties.ecs_broker.app_uri %>
 export ORG=${APP_NAME}-service-org
 export SPACE=${APP_NAME}-service-space
 export QUOTA=${APP_NAME}-service-quota
@@ -35,44 +35,44 @@ export CF_SPACE=$SPACE
 export CF_USER=$ADMIN_USER
 export CF_PASSWORD=$ADMIN_PASSWORD
 export CF_SKIP_SSL=<%= properties.ssl.skip_cert_verify %>
-export ORG_QUOTA=<%= properties.generic_broker.app_push.org_quota %>
-export APP_PUSH_TIMEOUT=<%= properties.generic_broker.app_push.timeout %>
-export APP_PUSH_MEMORY=<%= properties.generic_broker.app_push.memory %>
+export ORG_QUOTA=<%= properties.ecs_broker.app_push.org_quota %>
+export APP_PUSH_TIMEOUT=<%= properties.ecs_broker.app_push.timeout %>
+export APP_PUSH_MEMORY=<%= properties.ecs_broker.app_push.memory %>
 
 # Use this only if app needs additional libraries that need to be downloaded
 #
 ### DRIVER_DOWNLOAD_BEGIN_MARKER
-export DRIVER_DOWNLOAD_URL=<%= properties.generic_broker.driver_download_url %>
+export DRIVER_DOWNLOAD_URL=<%= properties.ecs_broker.driver_download_url %>
 ### DRIVER_DOWNLOAD_END_MARKER
 
 # Use these variables only if app needs to persistence store for saving its plans/sevice offerings etc.
-export PERSISTENCE_STORE_TYPE=<%= properties.generic_broker.persistence_store_type %>
+export PERSISTENCE_STORE_TYPE=<%= properties.ecs_broker.persistence_store_type %>
 
 ### PERSISTENCE_STORE_BEGIN_MARKER
-export PERSISTENCE_STORE_HOST=<%= properties.generic_broker.persistence_store.service_addr %>
-export PERSISTENCE_STORE_SID=<%= properties.generic_broker.persistence_store.service_sid %>
-export PERSISTENCE_STORE_PARAMS=<%= properties.generic_broker.persistence_store.service_params %>
-export PERSISTENCE_STORE_USER=<%= properties.generic_broker.persistence_store.persistence_broker_user %>
-export PERSISTENCE_STORE_PASSWD=<%= properties.generic_broker.persistence_store.persistence_broker_password %>
+export PERSISTENCE_STORE_HOST=<%= properties.ecs_broker.persistence_store.service_addr %>
+export PERSISTENCE_STORE_SID=<%= properties.ecs_broker.persistence_store.service_sid %>
+export PERSISTENCE_STORE_PARAMS=<%= properties.ecs_broker.persistence_store.service_params %>
+export PERSISTENCE_STORE_USER=<%= properties.ecs_broker.persistence_store.persistence_broker_user %>
+export PERSISTENCE_STORE_PASSWD=<%= properties.ecs_broker.persistence_store.persistence_broker_password %>
 ### PERSISTENCE_STORE_END_MARKER
 
 # Use these variables only if app needs to know how to connect to a remote target that it brokers
 ### TARGET_SERVICE_BEGIN_MARKER
-export TARGET_HOST=<%= properties.generic_broker.target_service.service_addr %>
-export TARGET_SID=<%= properties.generic_broker.target_service.service_sid %>
-export TARGET_PARAMS=<%= properties.generic_broker.target_service.service_params %>
-export TARGET_ADMIN_USER=<%= properties.generic_broker.target_service.target_admin_user %>
-export TARGET_ADMIN_PASSWD=<%= properties.generic_broker.target_service.target_admin_password %>
+export TARGET_HOST=<%= properties.ecs_broker.target_service.service_addr %>
+export TARGET_SID=<%= properties.ecs_broker.target_service.service_sid %>
+export TARGET_PARAMS=<%= properties.ecs_broker.target_service.service_params %>
+export TARGET_ADMIN_USER=<%= properties.ecs_broker.target_service.target_admin_user %>
+export TARGET_ADMIN_PASSWD=<%= properties.ecs_broker.target_service.target_admin_password %>
 ### TARGET_SERVICE_END_MARKER
 
 export BROKER_NAME=${APP_NAME}-${APP_VERSION}-service-broker
-export BROKER_USER=<%= properties.generic_broker.broker.user %>
-export BROKER_PASSWD=<%= properties.generic_broker.broker.password %>
-export SECURITY_USER_NAME=<%= properties.generic_broker.broker.user %>
-export SECURITY_USER_PASSWORD=<%= properties.generic_broker.broker.password %>
+export BROKER_USER=<%= properties.ecs_broker.broker.user %>
+export BROKER_PASSWD=<%= properties.ecs_broker.broker.password %>
+export SECURITY_USER_NAME=<%= properties.ecs_broker.broker.user %>
+export SECURITY_USER_PASSWORD=<%= properties.ecs_broker.broker.password %>
 
-export CREATE_OPEN_SECURITY_GROUP=<%= properties.generic_broker.create_open_security_group %>
-export DELETE_PREV_APP_INSTANCE=<%= properties.generic_broker.delete_prev_app_instance %>
+export CREATE_OPEN_SECURITY_GROUP=<%= properties.ecs_broker.create_open_security_group %>
+export DELETE_PREV_APP_INSTANCE=<%= properties.ecs_broker.delete_prev_app_instance %>
 
 export DEFAULT_DB_NAME=${APP_NAME}-${APP_VERSION}-mysql
 export SB_APP_ENV="setupServiceBrokerEnv.sh"
@@ -164,11 +164,11 @@ function wait_till_running() {
 
 
 function add_env_vars() {
-#  cf set-env ${APP_NAME}-${APP_VERSION} BASIC_AUTH_PASSWORD <%= properties.generic_broker.broker.password %>
-#  cf set-env ${APP_NAME}-${APP_VERSION} BASIC_AUTH_USERNAME <%= properties.generic_broker.broker.user %>
-#  cf set-env ${APP_NAME}-${APP_VERSION} ENCRYPTION_KEY <%= properties.generic_broker.encryption_key %>
-#  cf set-env ${APP_NAME}-${APP_VERSION} UAA_CLIENT_ID generic-sb-service
-#  cf set-env ${APP_NAME}-${APP_VERSION} UAA_CLIENT_SECRET <%= properties.uaa.clients.generic_broker.secret %>
+#  cf set-env ${APP_NAME}-${APP_VERSION} BASIC_AUTH_PASSWORD <%= properties.ecs_broker.broker.password %>
+#  cf set-env ${APP_NAME}-${APP_VERSION} BASIC_AUTH_USERNAME <%= properties.ecs_broker.broker.user %>
+#  cf set-env ${APP_NAME}-${APP_VERSION} ENCRYPTION_KEY <%= properties.ecs_broker.encryption_key %>
+#  cf set-env ${APP_NAME}-${APP_VERSION} UAA_CLIENT_ID ecs-sb-service
+#  cf set-env ${APP_NAME}-${APP_VERSION} UAA_CLIENT_SECRET <%= properties.uaa.clients.ecs_broker.secret %>
   cf set-env ${APP_NAME}-${APP_VERSION} UAA_HOST $SCHEME://uaa.$DOMAIN
   cf set-env ${APP_NAME}-${APP_VERSION} CC_HOST $API_ENDPOINT
   cf set-env ${APP_NAME}-${APP_VERSION} LOGIN_HOST $SCHEME://login.$DOMAIN
@@ -319,8 +319,8 @@ function register_on_demand_plans() {
     #plan_id=`echo $catalog_output | sed -e 's/"//g'  | sed -e "s/name:/\nname:/g" | grep "id:" | grep plans | sed -e "s/^.*id://g;s/,//" `
     log_debug "Catalog Service Id : $service_id "
 
-    <% if properties.generic_broker.on_demand_service_plans %>
-      <%  p("generic_broker.on_demand_service_plans").each do |plan|
+    <% if properties.ecs_broker.on_demand_service_plans %>
+      <%  p("ecs_broker.on_demand_service_plans").each do |plan|
              plan_name=plan['plan_name']
              plan_descrp=plan['plan_description']
              plan_details=plan['plan_details'].gsub('\n','')
@@ -379,6 +379,6 @@ restart_app
 wait_till_running
 
 # Remove register_plans if there are already some internal plans
-<% if properties.generic_broker.on_demand_service_plans %>
+<% if properties.ecs_broker.on_demand_service_plans %>
   register_on_demand_plans
 <% end %>

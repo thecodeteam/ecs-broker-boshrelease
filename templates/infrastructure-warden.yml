@@ -1,5 +1,5 @@
 meta:
-  environment: generic-broker-warden
+  environment: ecs-broker-warden
 
   stemcell:
     name: bosh-warden-boshlite-ubuntu
@@ -21,7 +21,7 @@ resource_pools:
       name: random
 
 networks:
-- name: generic_broker_network
+- name: ecs_broker_network
   subnets:
   - cloud_properties:
       name: random

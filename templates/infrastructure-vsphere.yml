@@ -1,5 +1,5 @@
 meta:
-  environment: generic-broker-warden
+  environment: ecs-broker-warden
 
   stemcell:
     name: bosh-warden-boshlite-ubuntu
@@ -19,7 +19,7 @@ update:
 #    lifecycle: errand
 #    resource_pool: small_z1
 #    networks:
-#      - name: generic_broker_network
+#      - name: ecs_broker_network
 #  - name: register-broker
 #    instances: 1
 #    templates:
@@ -27,7 +27,7 @@ update:
 #    lifecycle: errand
 #    resource_pool: small_z1
 #    networks:
-#      - name: generic_broker_network
+#      - name: ecs_broker_network
 #  - name: destroy-broker
 #    instances: 1
 #    templates:
@@ -35,7 +35,7 @@ update:
 #    lifecycle: errand
 #    resource_pool: small_z1
 #    networks:
-#      - name: generic_broker_network
+#      - name: ecs_broker_network
 
 compilation:
   cloud_properties:
@@ -47,7 +47,7 @@ resource_pools:
       name: random
 
 networks:
-- name: generic_broker_network
+- name: ecs_broker_network
   subnets:
   - cloud_properties:
       name: random

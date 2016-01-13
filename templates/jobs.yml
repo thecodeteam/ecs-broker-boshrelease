@@ -12,7 +12,7 @@ jobs:
     lifecycle: errand
     resource_pool: small_z1
     networks:
-      - name: generic_broker_network
+      - name: ecs_broker_network
   - name: register-broker
     instances: 1
     templates:
@@ -20,7 +20,7 @@ jobs:
     lifecycle: errand
     resource_pool: small_z1
     networks:
-      - name: generic_broker_network
+      - name: ecs_broker_network
   - name: destroy-broker
     instances: 1
     templates:
@@ -28,5 +28,5 @@ jobs:
     lifecycle: errand
     resource_pool: small_z1
     networks:
-      - name: generic_broker_network
+      - name: ecs_broker_network
 

@@ -1,5 +1,5 @@
 meta:
-  environment: generic-broker-openstack
+  environment: ecs-broker-openstack
 
   stemcell:
     name: bosh-openstack-kvm-ubuntu
@@ -25,7 +25,7 @@ networks:
   - name: floating
     type: vip
     cloud_properties: {}
-  - name: generic_broker_network
+  - name: ecs_broker_network
     type: dynamic
     cloud_properties:
       security_groups:
