@@ -57,12 +57,23 @@ export SECURITY_USER_PASSWORD=<%= properties.ecs_broker.broker.password %>
 export CREATE_OPEN_SECURITY_GROUP=<%= properties.ecs_broker.create_open_security_group %>
 export DELETE_PREV_APP_INSTANCE=<%= properties.ecs_broker.delete_prev_app_instance %>
 
-export DEFAULT_DB_NAME=${APP_NAME}-${APP_VERSION}-mysql
 export SB_APP_ENV="setupServiceBrokerEnv.sh"
 
 export EXPLODED_APP_FOLDER="exploded-app-contents"
 
-### CUSTOM_VARIABLE_BEGIN_MARKER
+export MANAGMENT_ENDPOINT=<%= properties.ecs_broker.broker.managmentEndpoint %>
+export OBJECT_ENDPOINT=<%= properties.ecs_broker.broker.objectEndpoint %>
+export BASE_URL=<%= properties.ecs_broker.broker.baseUrl %>
+export REPOSITORY_ENDPOINT=<%= properties.ecs_broker.broker.repositoryEndpoint %>
+export REPLICATION_GROUP=<%= properties.ecs_broker.broker.replicationGroup %>
+export NAMESPACE=<%= properties.ecs_broker.broker.namespace %>
+export REPOSITORY_USER=<%= properties.ecs_broker.broker.repositoryUser %>
+export REPOSITORY_BUCKET=<%= properties.ecs_broker.broker.repositoryBucket %>
+export USERNAME=<%= properties.ecs_broker.broker.username %>
+export PASSWORD=<%= properties.ecs_broker.broker.password %>
+export PREFIX=<%= properties.ecs_broker.broker.prefix %>
+export BROKER_API_VERSION=<%= properties.ecs_broker.broker.brokerApiVersion %>
+export CERTIFICATE=<%= properties.ecs_broker.broker.certificate %>
 
 ### CUSTOM_VARIABLE_END_MARKER
 
@@ -147,11 +158,6 @@ function wait_till_running() {
 
 
 function add_env_vars() {
-#  cf set-env ${APP_NAME}-${APP_VERSION} BASIC_AUTH_PASSWORD <%= properties.ecs_broker.broker.password %>
-#  cf set-env ${APP_NAME}-${APP_VERSION} BASIC_AUTH_USERNAME <%= properties.ecs_broker.broker.user %>
-#  cf set-env ${APP_NAME}-${APP_VERSION} ENCRYPTION_KEY <%= properties.ecs_broker.encryption_key %>
-#  cf set-env ${APP_NAME}-${APP_VERSION} UAA_CLIENT_ID ecs-sb-service
-#  cf set-env ${APP_NAME}-${APP_VERSION} UAA_CLIENT_SECRET <%= properties.uaa.clients.ecs_broker.secret %>
   cf set-env ${APP_NAME}-${APP_VERSION} UAA_HOST $SCHEME://uaa.$DOMAIN
   cf set-env ${APP_NAME}-${APP_VERSION} CC_HOST $API_ENDPOINT
   cf set-env ${APP_NAME}-${APP_VERSION} LOGIN_HOST $SCHEME://login.$DOMAIN
@@ -159,7 +165,6 @@ function add_env_vars() {
   cf set-env ${APP_NAME}-${APP_VERSION} SCHEME $SCHEME
   cf set-env ${APP_NAME}-${APP_VERSION} VERIFY_SSL <%= !properties.ssl.skip_cert_verify %>
 
-  # Adding additional properties that most spring based apps or internal apps seem to be expecting
   cf set-env ${APP_NAME}-${APP_VERSION} CF_ORG $CF_ORG
   cf set-env ${APP_NAME}-${APP_VERSION} CF_SPACE $CF_SPACE
   cf set-env ${APP_NAME}-${APP_VERSION} CF_USER $CF_USER
@@ -168,29 +173,21 @@ function add_env_vars() {
   cf set-env ${APP_NAME}-${APP_VERSION} SECURITY_USER_NAME $SECURITY_USER_NAME
   cf set-env ${APP_NAME}-${APP_VERSION} SECURITY_USER_PASSWORD $SECURITY_USER_PASSWORD
 
-  # CUSTOM_VARIABLE_ENV_BEGIN_MARKER
-  # CUSTOM_VARIABLE_ENV_END_MARKER
-
-  # Add app specific env variables using the setup script definition
-  #add_parameterized_env_vars
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.managmentEndpoint $BROKER_MANAGMENT_ENDPOINT
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.objectEndpoint $BROKER_OBJECT_ENDPOINT
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.baseUrl $BROKER_BASE_URL
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.repositoryEndpoint $BROKER_REPOSITORY_ENDPOINT
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.replicationGroup $BROKER_REPLICATION_GROUP
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.namespace $BROKER_NAMESPACE
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.repositoryUser $BROKER_REPOSITORY_USER
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.repositoryBucket $BROKER_REPOSITORY_BUCKET
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.username $BROKER_USERNAME
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.password $BROKER_PASSWORD
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.prefix $BROKER_PREFIX
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.brokerApiVersion $BROKER_BROKER_API_VERSION
+  cf set-env ${APP_NAME}-${APP_VERSION} broker.certificate $BROKER_CERTIFICATE
 }
 
-#function add_parameterized_env_vars() {
-#  pushd $PACKAGE_PATH
-#
-#    # Source the environment variables before doing a cf set-env using the variable name
-#    source $SB_APP_ENV
-#    cat $SB_APP_ENV | grep -v "^#" | grep "." | while read env_var_entry
-#    do
-#      key=`echo $env_var_entry | sed -e 's/export //;s/=.*//';`
-#      #formatted_key=`echo $key | sed -e 's/__/\./g' `
-#      formatted_env_var=`env | grep "^${key}=" | sed -e 's/^.*=//';`
-#      cf set-env ${APP_NAME}-${APP_VERSION} ${key} ${formatted_env_var}
-#    done
-#  popd
-#}
-
-# Use this only to bind any additional files/libraries or modify app contents
 function modify_app() {
   pushd $PACKAGE_PATH
 
@@ -254,27 +251,6 @@ function push_app() {
 function update_env_variable_script() {
   pushd $PACKAGE_PATH
     mkdir -p /var/vcap/data/tmp
-
-    # Modify the variables that need to be substituted with actual values passed via bosh manifest or Ops Mgr Tile
-    # cp templates/setupServiceBrokerEnv.sh /var/vcap/data/tmp
-
-    #    sed -i.bak   "s#CUSTOM_VARIABLE_SED_BEGIN_MARKER##g;            \
-    #            s#DB_HOST_ADDR#${PERSISTENCE_STORE_HOST}#g;         \
-    #            s#DB_SID#${PERSISTENCE_STORE_SID}#g;                 \
-    #            s#DB_PARAMS#${PERSISTENCE_STORE_PARAMS}#g;           \
-    #            s#DB_USER#${PERSISTENCE_STORE_USER}#g;               \
-    #            s#DB_PASSWD#${PERSISTENCE_STORE_PASSWD}#g;           \
-    #            s#TARGET_HOST_ADDR#${TARGET_HOST}#g;                 \
-    #            s#TARGET_SID#${TARGET_SID}#g;                        \
-    #            s#TARGET_PARAMS#${TARGET_PARAMS}#g;                  \
-    #            s#TARGET_ADMIN_USER#${TARGET_ADMIN_USER}#g;          \
-    #            s#TARGET_ADMIN_PASSWD#${TARGET_ADMIN_PASSWD}#g;      \
-    #            s#CUSTOM_VARIABLE_END_MARKER##g;"                    \
-    #            /var/vcap/data/tmp/${SB_APP_ENV}
-    #
-    #    sed -i.bak   "s#CUSTOM_VARIABLE_SED_BEGIN_MARKER##g;            \
-    #                  s#CUSTOM_VARIABLE_SED_END_MARKER##g;"             \
-    #            /var/vcap/data/tmp/${SB_APP_ENV}
 
     cp $PACKAGE_PATH/templates/setupServiceBrokerEnv.sh /var/vcap/data/tmp
 
