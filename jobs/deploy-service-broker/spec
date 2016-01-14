@@ -42,16 +42,6 @@ properties:
     description: 'Broker basic auth user'
   ecs_broker.broker.password:
     description: 'Broker basic auth password'
-  ### CUSTOM_VARIABLE_BEGIN_MARKER
-
-  ### CUSTOM_VARIABLE_END_MARKER
-
-
-  ecs_broker.persistence_store_type:
-    description: 'Use MySQL or custom DB for persistence store'
-    default: none
-
-
 
   ### ON_DEMAND_PLAN_BEGIN_MARKER
   ecs_broker.on_demand_service_plans:
