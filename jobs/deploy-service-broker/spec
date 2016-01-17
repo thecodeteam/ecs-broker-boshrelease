@@ -42,6 +42,30 @@ properties:
     description: 'Broker basic auth user'
   ecs_broker.broker.password:
     description: 'Broker basic auth password'
+  managementEndpoint:
+    decription: ECS Management Endpoint
+  objectEndpoint:
+    description: 'ECS Object Endpoint'
+  baseUrl:
+    description: 'ECS Base URL'
+  repositoryEndpoint:
+    description: 'Repository Endpoint'
+  replicationGroup:
+    description: 'Replication Group'
+  namespace:
+    description: 'Namespace'
+  repositoryUser:
+    description: 'Repository User'
+  repositoryBucket:
+    description: 'Repository Bucket'
+  username:
+    description: 'ECS Username'
+  password:
+    description: 'ECS Password'
+  prefix:
+    description: 'ECS Repository Prefix'
+  brokerApiVersion:
+    description: 'ECS Broker API Version'
 
   ### ON_DEMAND_PLAN_BEGIN_MARKER
   ecs_broker.on_demand_service_plans:
