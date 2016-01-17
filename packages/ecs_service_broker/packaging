@@ -1,14 +1,11 @@
 # abort script on any command that exit with a non zero value
 set -e
 
-
 # Copy over the any templates into the BOSH_INSTALL_TARGET directory
 # It would be copied into the /var/vcap/packages/ecs-service-broker folder
 cp -r templates ${BOSH_INSTALL_TARGET}/
 
-# Check for presence of the app bits
-# Modify the archive to be other file extension if its not a jar
-app_archive=`ls ecs-cf-service-broker-0.0.1-SNAPSHOT.jar`
+app_archive="ecs-cf-service-broker-0.0.1-SNAPSHOT.jar"
 
 if [  "$app_archive" != "" ] ; then
   echo "service-broker app found"
