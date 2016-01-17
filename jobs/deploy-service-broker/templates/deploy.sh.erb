@@ -38,16 +38,6 @@ export CF_SKIP_SSL=<%= properties.ssl.skip_cert_verify %>
 export ORG_QUOTA=<%= properties.ecs_broker.app_push.org_quota %>
 export APP_PUSH_TIMEOUT=<%= properties.ecs_broker.app_push.timeout %>
 export APP_PUSH_MEMORY=<%= properties.ecs_broker.app_push.memory %>
-
-# Use this only if app needs additional libraries that need to be downloaded
-#
-
-# Use these variables only if app needs to persistence store for saving its plans/sevice offerings etc.
-export PERSISTENCE_STORE_TYPE=<%= properties.ecs_broker.persistence_store_type %>
-
-
-# Use these variables only if app needs to know how to connect to a remote target that it brokers
-
 export BROKER_NAME=${APP_NAME}-${APP_VERSION}-service-broker
 export BROKER_USER=<%= properties.ecs_broker.broker.user %>
 export BROKER_PASSWD=<%= properties.ecs_broker.broker.password %>
@@ -75,15 +65,13 @@ export PREFIX=<%= properties.prefix %>
 export BROKER_API_VERSION=<%= properties.brokerApiVersion %>
 export CERTIFICATE=<%= properties.certificate %>
 
-### CUSTOM_VARIABLE_END_MARKER
-
 export CF_HOME=`pwd`/home/cf
 mkdir -p $CF_HOME
 
 # Following variables would be replaced based on blobs that get added and are considered as app bits
 # Modify extension type for App file - modify as needed
-APP_PREFIX_NAME=ecs_service_broker
-EXTENSION_TYPE=ecs_service_broker
+APP_PREFIX_NAME=ecs-cf-service-broker
+EXTENSION_TYPE=jar
 
 TARGET_APP=${APP_PREFIX_NAME}.${EXTENSION_TYPE}
 JOB_NAME=deploy-service-broker
@@ -126,14 +114,6 @@ function create_open_security_group() {
     cf bind-running-security-group all_open
   else
     echo "Not creating open security group"
-  fi
-}
-
-function provision_and_bind_db() {
-  db_plan=`cf marketplace | grep p-mysql | awk '{ print $2 }' | sed 's/,//g'`
-  if [ "$db_plan" != "" ]; then
-    cf create-service p-mysql $db_plan $DEFAULT_DB_NAME
-    cf bind-service ${APP_NAME}-${APP_VERSION} $DEFAULT_DB_NAME
   fi
 }
 
@@ -196,20 +176,11 @@ function modify_app() {
     mkdir -p ${EXPLODED_APP_FOLDER}
 
     cd ${EXPLODED_APP_FOLDER}
-    unzip ../lib/${APP_PREFIX_NAME}*.${EXTENSION_TYPE}
-
-    # Expecting any drivers to go into the lib folder to be loaded by the java application
-    mkdir -p lib
-    curl -k ${DRIVER_DOWNLOAD_URL} -o lib/driver.jar
-    if [ "$?" == "0" ]; then
-      log_debug "Successfully downloaded Driver"
-    else
-      log_debug "Unable to download Driver from url: ${DRIVER_DOWNLOAD_URL}"
-    fi
+    unzip ../${APP_PREFIX_NAME}*.${EXTENSION_TYPE}
 
     zip -r ${PACKAGE_PATH}/${TARGET_APP} *
   else
-    cp ${PACKAGE_PATH}/lib/${APP_PREFIX_NAME}*.${EXTENSION_TYPE}  ${PACKAGE_PATH}/${TARGET_APP}
+    cp ${PACKAGE_PATH}/lib/${APP_PREFIX_NAME}*.${EXTENSION_TYPE}  ${PACKAGE_PATH}/lib/${TARGET_APP}
   fi
 
   popd
@@ -242,7 +213,7 @@ function push_app() {
     delete_prev_app_instance
     <% end %>
 
-    CF_TRACE=true cf push ${APP_NAME}-${APP_VERSION} -p ${PACKAGE_PATH}/${TARGET_APP} -n ${APP_URI} -d ${APP_DOMAIN} -t ${APP_PUSH_TIMEOUT} -m ${APP_PUSH_MEMORY}m --no-start
+    CF_TRACE=true cf push ${APP_NAME}-${APP_VERSION} -p ${PACKAGE_PATH}/lib/${TARGET_APP} -n ${APP_URI} -d ${APP_DOMAIN} -t ${APP_PUSH_TIMEOUT} -m ${APP_PUSH_MEMORY}m --no-start
     cf logs ${APP_NAME}-${APP_VERSION} --recent
   popd
 }
@@ -326,13 +297,10 @@ create_open_security_group
 create_quota
 #update_env_variable_script
 
+# TODO:  Add certificate writing to modify_app
 modify_app
 push_app
 add_env_vars
-
-if [ "${PERSISTENCE_STORE_TYPE}" == "mysql" ]; then
-  provision_and_bind_db
-fi
 
 restart_app
 wait_till_running
