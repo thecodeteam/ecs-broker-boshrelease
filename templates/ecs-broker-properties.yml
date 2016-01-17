@@ -1,7 +1,7 @@
 properties:
   # EDIT ME -- change the domain names
-  domain: 10.244.0.34.xip.io
-  app_domains: 10.244.0.34.xip.io
+  domain: bosh-lite.com
+  app_domains: bosh-lite.com
   uaa:
     clients:
       ecs_broker:
