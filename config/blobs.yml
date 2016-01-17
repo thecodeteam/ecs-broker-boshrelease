@@ -3,7 +3,7 @@ cf_cli/cf-linux-amd64.tgz:
   object_id: 48a118c9-64ad-4b4e-a4c1-3c7352966922
   sha: 82c5774aa44af9d091d3461adfb61bdadd64aad3
   size: 5486088
-ecs-cf-service-broker/ecs-cf-service-broker-0.0.1-SNAPSHOT.jar:
+ecs_service_broker/ecs-cf-service-broker-0.0.1-SNAPSHOT.jar:
   object_id: e7037a8c-f422-4268-9d6c-0ea2416d5e05
   sha: 2d022f9287bbd5ac0183b804a6c3e09b2b3d5fa2
   size: 24177657

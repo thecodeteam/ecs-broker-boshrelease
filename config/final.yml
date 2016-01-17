@@ -3,4 +3,4 @@ blobstore:
   provider: local
   options:
     blobstore_path: /tmp/ecs_broker-blobs
-final_name: ecs_broker_blobstore
+final_name: ecs_broker
