@@ -18,8 +18,8 @@ if [ "$CLEAN_UP" == "true" ]; then
 fi
 
 # Make sure the release has already been uploaded
-#bosh -n upload release; 
-#echo "Done uploading the release ..."
+bosh -n upload release;
+echo "Done uploading the release ..."
 
 bosh -d $DEPLOYMENT_MANIFEST -n deploy
 echo "Done deploying ..."

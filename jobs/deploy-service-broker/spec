@@ -2,6 +2,8 @@
 name: deploy-service-broker
 templates:
   deploy.sh.erb: bin/run
+  ecs_cert.pem.erb: ecs_cert.pem
+  application.yml.erb: application.yml
 packages:
 - cf_cli
 - ecs_service_broker
@@ -42,6 +44,10 @@ properties:
     description: 'Broker basic auth user'
   ecs_broker.broker.password:
     description: 'Broker basic auth password'
+  ecs_broker.broker.certificate:
+    description: 'Broker Certificate'
+  ecs_broker.broker.internal_service_names:
+    description: 'Internal service name'
   managementEndpoint:
     decription: ECS Management Endpoint
   objectEndpoint:

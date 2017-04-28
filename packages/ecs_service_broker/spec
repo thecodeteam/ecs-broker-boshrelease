@@ -7,4 +7,4 @@ files:
 - templates/config/application.properties
 - templates/all_open.json
 - templates/setupServiceBrokerEnv.sh
-- ecs_service_broker/ecs-cf-service-broker-0.0.1-SNAPSHOT.jar
+- ecs-cf-service-broker/ecs-cf-service-broker-0.0.1-SNAPSHOT.jar

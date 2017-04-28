@@ -15,6 +15,8 @@ set -e -x
     app_domain = grab_app_domain_name
   %>
 
+SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 export PATH="/var/vcap/packages/cf_cli/bin:$PATH"
 
 export SCHEME=https
@@ -51,19 +53,19 @@ export SB_APP_ENV="setupServiceBrokerEnv.sh"
 
 export EXPLODED_APP_FOLDER="exploded-app-contents"
 
-export MANAGMENT_ENDPOINT=<%= properties.managmentEndpoint %>
-export OBJECT_ENDPOINT=<%= properties.objectEndpoint %>
-export BASE_URL=<%= properties.baseUrl %>
-export REPOSITORY_ENDPOINT=<%= properties.repositoryEndpoint %>
-export REPLICATION_GROUP=<%= properties.replicationGroup %>
-export NAMESPACE=<%= properties.namespace %>
-export REPOSITORY_USER=<%= properties.repositoryUser %>
-export REPOSITORY_BUCKET=<%= properties.repositoryBucket %>
-export USERNAME=<%= properties.username %>
-export PASSWORD=<%= properties.password %>
-export PREFIX=<%= properties.prefix %>
-export BROKER_API_VERSION=<%= properties.brokerApiVersion %>
-export CERTIFICATE=<%= properties.certificate %>
+export BROKER_OBJECT_ENDPOINT=<%= properties.objectEndpoint %>
+export BROKER_MANAGEMENT_ENDPOINT=<%= properties.managementEndpoint %>
+export BROKER_BASE_URL=<%= properties.baseUrl %>
+export BROKER_REPOSITORY_ENDPOINT=<%= properties.repositoryEndpoint %>
+export BROKER_REPLICATION_GROUP=<%= properties.replicationGroup %>
+export BROKER_NAMESPACE=<%= properties.namespace %>
+export BROKER_REPOSITORY_USER=<%= properties.repositoryUser %>
+export BROKER_REPOSITORY_BUCKET=<%= properties.repositoryBucket %>
+export BROKER_USERNAME=<%= properties.username %>
+export BROKER_PASSWORD=<%= properties.password %>
+export BROKER_PREFIX=<%= properties.prefix %>
+export BROKER_BROKER_API_VERSION=<%= properties.brokerApiVersion %>
+export BROKER_CERTIFICATE="<%= properties.ecs_broker.broker.certificate %>"
 
 export CF_HOME=`pwd`/home/cf
 mkdir -p $CF_HOME
@@ -136,49 +138,19 @@ function wait_till_running() {
   done
 }
 
-
-function add_env_vars() {
-  cf set-env ${APP_NAME}-${APP_VERSION} UAA_HOST $SCHEME://uaa.$DOMAIN
-  cf set-env ${APP_NAME}-${APP_VERSION} CC_HOST $API_ENDPOINT
-  cf set-env ${APP_NAME}-${APP_VERSION} LOGIN_HOST $SCHEME://login.$DOMAIN
-  cf set-env ${APP_NAME}-${APP_VERSION} ROOT "\$HOME"
-  cf set-env ${APP_NAME}-${APP_VERSION} SCHEME $SCHEME
-  cf set-env ${APP_NAME}-${APP_VERSION} VERIFY_SSL <%= !properties.ssl.skip_cert_verify %>
-
-  cf set-env ${APP_NAME}-${APP_VERSION} CF_ORG $CF_ORG
-  cf set-env ${APP_NAME}-${APP_VERSION} CF_SPACE $CF_SPACE
-  cf set-env ${APP_NAME}-${APP_VERSION} CF_USER $CF_USER
-  cf set-env ${APP_NAME}-${APP_VERSION} CF_PASSWORD $CF_PASSWORD
-  cf set-env ${APP_NAME}-${APP_VERSION} CF_TARGET $CF_TARGET
-  cf set-env ${APP_NAME}-${APP_VERSION} SECURITY_USER_NAME $SECURITY_USER_NAME
-  cf set-env ${APP_NAME}-${APP_VERSION} SECURITY_USER_PASSWORD $SECURITY_USER_PASSWORD
-
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.managmentEndpoint $BROKER_MANAGMENT_ENDPOINT
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.objectEndpoint $BROKER_OBJECT_ENDPOINT
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.baseUrl $BROKER_BASE_URL
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.repositoryEndpoint $BROKER_REPOSITORY_ENDPOINT
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.replicationGroup $BROKER_REPLICATION_GROUP
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.namespace $BROKER_NAMESPACE
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.repositoryUser $BROKER_REPOSITORY_USER
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.repositoryBucket $BROKER_REPOSITORY_BUCKET
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.username $BROKER_USERNAME
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.password $BROKER_PASSWORD
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.prefix $BROKER_PREFIX
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.brokerApiVersion $BROKER_BROKER_API_VERSION
-  cf set-env ${APP_NAME}-${APP_VERSION} broker.certificate $BROKER_CERTIFICATE
-}
-
 function modify_app() {
-  pushd $PACKAGE_PATH
+  pushd $PACKAGE_PATH/$SUBDIR
 
-  if [ "${DRIVER_DOWNLOAD_URL}xxx" != "xxx" ]; then
+  if [ -n "${BROKER_CERTIFICATE}" ]; then
 
     mkdir -p ${EXPLODED_APP_FOLDER}
 
     cd ${EXPLODED_APP_FOLDER}
-    unzip ../${APP_PREFIX_NAME}*.${EXTENSION_TYPE}
+    unzip ${PACKAGE_PATH}/lib/${APP_PREFIX_NAME}*.${EXTENSION_TYPE}
+    cp "$SCRIPT_PATH/../ecs_cert.pem" BOOT-INF/classes/ecs_cert.pem
+    cp "$SCRIPT_PATH/../application.yml" BOOT-INF/classes/application.yml
 
-    zip -r ${PACKAGE_PATH}/${TARGET_APP} *
+    zip -r ${PACKAGE_PATH}/lib/${TARGET_APP} *
   else
     cp ${PACKAGE_PATH}/lib/${APP_PREFIX_NAME}*.${EXTENSION_TYPE}  ${PACKAGE_PATH}/lib/${TARGET_APP}
   fi
@@ -208,30 +180,10 @@ function push_app() {
     mkdir -p /var/vcap/data/tmp
     export TMPDIR=/var/vcap/data/tmp
 
-    # Cleanup any older version of the app
-    <% if properties.delete_prev_app_instance%>
-    delete_prev_app_instance
-    <% end %>
+    # TODO -- add back in the timeouts and quotas for the app push?  Or remove them from the errand props?
 
-    CF_TRACE=true cf push ${APP_NAME}-${APP_VERSION} -p ${PACKAGE_PATH}/lib/${TARGET_APP} -n ${APP_URI} -d ${APP_DOMAIN} -t ${APP_PUSH_TIMEOUT} -m ${APP_PUSH_MEMORY}m --no-start
+    cf push ${APP_NAME}-${APP_VERSION} -p ${PACKAGE_PATH}/lib/${TARGET_APP} --no-start
     cf logs ${APP_NAME}-${APP_VERSION} --recent
-  popd
-}
-
-
-function update_env_variable_script() {
-  pushd $PACKAGE_PATH
-    mkdir -p /var/vcap/data/tmp
-
-    cp $PACKAGE_PATH/templates/setupServiceBrokerEnv.sh /var/vcap/data/tmp
-
-    cat $PACKAGE_PATH/templates/setupServiceBrokerEnv.sh | grep -v "^#" | grep "." | while read env_var_entry
-    do
-      variable_name=`echo $env_var_entry | sed -e 's/export //g;s/=.*$//g' `
-      variable_value=${!variable_name}
-      sed -i.bak "s#TEMPLATE_${variable_name}#${variable_value}#g" /var/vcap/data/tmp/${SB_APP_ENV}
-    done
-    cp /var/vcap/data/tmp/${SB_APP_ENV} $PACKAGE_PATH/${SB_APP_ENV}
   popd
 }
 
@@ -295,17 +247,9 @@ cf -v
 authenticate_and_target
 create_open_security_group
 create_quota
-#update_env_variable_script
 
-# TODO:  Add certificate writing to modify_app
 modify_app
 push_app
-add_env_vars
 
 restart_app
 wait_till_running
-
-# Remove register_plans if there are already some internal plans
-<% if properties.ecs_broker.on_demand_service_plans %>
-  register_on_demand_plans
-<% end %>
