@@ -5,7 +5,7 @@ set -e
 # It would be copied into the /var/vcap/packages/ecs-service-broker folder
 cp -r templates ${BOSH_INSTALL_TARGET}/
 
-app_archive=`ls ecs_service_broker/ecs-cf-service-broker-0.0.1-SNAPSHOT.jar`
+app_archive=`ls ecs-cf-service-broker/ecs-cf-service-broker-0.0.1-SNAPSHOT.jar`
 
 if [  "$app_archive" != "" ] ; then
   echo "service-broker app found"

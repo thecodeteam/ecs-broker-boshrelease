@@ -2,7 +2,7 @@
 
 # For use to create final release tarball
 VERSION=1.5
-CREATE_FINAL_TARBALL=true
+#CREATE_FINAL_TARBALL=true
 RELEASE_NAME=ecs_broker
 
 echo "Cleanup previous release ..."
