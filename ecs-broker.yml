@@ -1,0 +1,452 @@
+---
+# The high-level description of your tile.
+# Replace these properties with real values.
+#
+name: ecs-broker-tile
+icon_image: iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAEQlJREFUeNrsnXuwXVV5wH/fWnuffR736bk319zcJmhugOIbpWip1RREYhXbtI5SrJbSIk51VHxVqiKhOBXwgY/OUKZWUh/IlPoMhRkJUF4RRcepJoRUkvoAbh6Xm5t7Hvux1uofZ++Tcx+5CbF1hnb9ZvbMzTn77LPPXr/vW996zEScc3j+/6L8I/ACeLwAHi+Axwvg8QJ4vAAeL4DHC+DxAni8AB4vgMcL4PECeLwAHi+Axwvg8QJ4vAAeL4DHC+DxAni8AB4vgMcL4PECeLwAHi+Axwvg8QJ4vAAeL4DHC+DxAni8AB4vgMcL4PECeLwAHi+Axwvg8QJ4vAAeL4DHC+DxAni8AB4vgMcL4PECeLwAHi+A59eC8KFbj3YG4EAcNAKYAda0YK+Cz50Fttw575QpeP33YLYKGkgVhClYC5TACTi7ksHkDlL7JYQrEDqvo0EbeKICZQOlLH+dzvcud2+Bgodn4UACUe5zbGFtH6ysQNss//tcmY2lnbwq+DlTrnL40iJYa0nTFBE56oN0zqGUYmhoCKUUBw8eXPTZ5f6DLqWWj8V6vc4DDzzA5s2bu69FUcSmTZsol8scOnSIJEloNBqMjo7SbrcBni4ifdbaA1EUPeGcwznH2NgYt9xyC1/72tcIgPuAVXSadnGGcDiQAwg/RPFlcN8Hd6x6dU41Cmrpy7DuVqyUEbUJ1DgSv5VSBBawrnOuuN5GXw/cBEzl/x7DyeuBreRekjpY1Q9PL2TNXy+xidi8G/hP4GnAbuBsoD3/Bi1VG5Mag3FmYaO+WkQu6xjKMJAc8aeKVJxzqtlsvkJEdlhrEZEq8E/AC0XkEq31N48kwZEky0W8YG5u7op6vf6tM844461hGJIkCbVajSAISJIEEUFrjVLqxVmWXeWce6mIdKVLkgSl1L8qpS4B/qu4fgA8G+gHVi+vuLycin0XdfU9lJyPdbuOKoIFlAOxl1JKr8QKGAFRoORissAw1XgbQRXqQac9dP6ZTEAYAkbyo2Bo/nc46C9DqDt/d54axPEESVJFqefmZ/blV18kaeBS0sxgWJQtni8iLwIO5gHSt8yvrQC63W7rIqJFpN859wfOuZJS6kNhGH5zqcyhtSYIgkUZIm983Wg0Ljt06NCq0dHR37/gggvEGOOKDNBoNJiZmSHLsrLWekutVvu9NE3RWt/jnLsVOCgiw865c4CNwMYsyy4XkY8UAhwbLj8q7jRC/TCi34ywednzRTRlvo2KzyFTh6sOZQH9bxxSlzOTwPBQJ5JDA3HYMUdbcGKPcOX5QZwaMED3AUpHhvlRZfNjCU8VSgRBluwAgT8E7jiWxxSGIQDGmO5TExGMMS9KkuSVInJbb0MXXcdSmUFESJLkPOfcmjzq7S9/+UvnnENEqFQqBEGA1rrebrd/lGXZqiAIbtBa/1n+nd3rVCqVKx577DGq1eo3ROSywcHB0qmnnnppcGx5vOe5GwdzAYypG3jT9yxTc18kiqFWg0O1/Cc7CMyzCdztiKzoBpYAVkGiLkGbT1LJ4JQqtIP1uNZpiL6KZgBioC/uZIGnGEU/20MkIr8AJqy17wjD8LbeBg+CgFarxfbt27syAORdCBMTE+8rl8szaZqmWuvh4r2hoSFqtRrNZpN2u71FKbWqUqm8yzn3qTRNl8wyURRx9913v/akk066+QUveMEHzjzzzG8vJcBf4/hH4ASEDGwFyzmEcgnK9pGqThxlDp63/5/Z0/cgj9V3MNIAa8ApQP6Cgfb1ZHpBzMk0tnU27dqD9FuoCjg5l6D1DcSC4jkk5k87mfqp1/hLCeCcIwiCLzjnVqZpemEYhs8Gftx7TqlUYvXq1RSR3ZP+f0cp9ZwDBw6c19fX94YgCF5bvHfgwAFmZ2cJw/DtxpjTy+XyF0dGRj41OztLHMdofbi301rTarUwxrB69WpE5B0zMzMbp6enP7KEAO5hRPbj2J//AlDZ/SSVq2mUb2eg/VuoIhOUQVU+RlI9l6aFvgb0J18EdT6p7mQD3c0eW4A/whFTbXeiPKtcBfa94DpVf2TeiGu9FFV+FoQNSJ9SIvQWXb2vGWMOishXoii6cO/evW+fmpp6SxAE3a4iDEPWrl1LGIbz0rYx5tK5uTmCILixVCq921qL1hoR4fHHHydJEiYmJv6mUqlgrf3w1NRUN4tYa7t/F6OSffv2MTw8TLvd/kWj0bhzYGDgzGDpuYEF/Wdk4fHSHA897XROf/THlMyzcApaAYwefA21Q5McqkzTZ36KMISznYbTDhINzp1H2d5IK8jrCDOOC+4Ad+L8vjwAl9xL2G5gSgDmqdT4xdBxYUXvnJvQWm83xuypVqsXrV279koR+dnCz2dZ1tv3n5gkyYa+vr6/BYjjeLi4vlKKyclJgLPa7faYUupfoijabYzp3kdR+RtjiOOYarXKunXruoIaY85JkmQwWLbqE8BpaFZgKIEXPwZOX07GTeA61XozBCdfpj8ZR7khjBxuUOGnxO4sXLAHlXZqh6F0AybY0qm4eqp2JyDm1cxWtpAkeaEYnUyt3RlGPrWp5Q17jYh8Vmt9kYh8sIjQLMvYvXs3WZZ1/71ixYpLBgcHAa7Ns4IsnKMwxrww73K2FhFfNLBSCmNMVxjnHAtqg1hE9gZHGfqBZKDiztcrwHILlA+ArncbULnTOlrJ4XB25gs4dwGhhZkKBA7K6SZC+RDGLSgys0cw5uVI8HOUhlYE9dZHsOFl2P/9LqBC1p2ykF8xCxzhdTHGkGXZDSLyWWPM+0XkChGJi4xRr9e7NYAxJgrD8C1BEGzJsmx/mqbd4jAMQ2ZmZnj00UcZHx8/qV6vs3v37p15PbCoFhkfH6e/v59ms9m9v96h59FHAZJHupNOPSDSwMnDwEuOMDADI58nUBfSCEFSKMeaUG4hSs/uDgeLxhd1Mzr+Y5ohpCFU22DDrxPIazHm8IzgMY1Ujm82/CARA5Kw11UWSlCEzOZ8MipapvhbZ639IHBNbzFXPHARoVarzRljPtVut99ZrVbfVCqVri8aqojSvM/+yyRJ2LVr10crlQpjY2Pd7iHLMiqVCmvWrEFrPdputxkbG5tesWLFsnXJwMBANzsU3U2apkcTwIILwfTNb2WVpJ3y/ggPXtsL0GwlC7+EcCLD7X/H6rFFjY95LxnXQACuDEavpBbfhXXrSNWxtatbOO34pGp2IONG+5sMSczzZB+PuRrCokJuOJ8zWe55Rc65gaNlCKXUdUqpd8Zx/J44jq/vHdMXjdVqtS4TkUfq9fp9veP5nuKQRqNBrVaz+TzAEX94HMf09/czOTlJlmU454iiiKmpKfbs2XM0AXQeBLNA2DOQLz+z0x+4I4ekdZuptl+F8Lugx7qndvr7JhK/kiC+h8YQxH1Qb60nKt2G0SFWjj2oBXBpMfw8DglSoMp15oW8T9/LKmlywEXF14d5BJ+rtd56tPn83mhfqmvI0/BDIvIt4DUicg5wa9Fna61JkuQsa+1IEATvHhkZIUkS4jjudgFaa+I4ZmpqilWrVu2tVqskSTK01H31zjf0FofF3865Y1gNlBBUAGoW1F6QbD3oiQWNcCfa7ex0Fd1uQBGaPyEwE2S93YO9j1JjAsM9zEUQGAjkPYRuK6UsnFdHCPcBe5dtfKGz4GTi4+zFBWjiXMTt5pmU8npgYbsWRdbxzg30NrJS6tN56r+kXC4TBAE7duzgBz/4AdPT0x8ul8vUarXNRcrvFardbjM8PMz69esZHx9/uN1uEwTBukqlQrlc7h7VarU7HCzEKY4gCLpCqaP3qwJSgbgGzTpIdVN3hbCIaBW8lTg8mXb4ICWTL+gAVpgXzUY2YuwZJOoJ4io0+0Jq6R0MxVeThPk6geSLQebNoM5Alpi/712lLO6BHgnkOCSQBt+34/zYjjAqLRyLhnLdh3k8hWDRv0dRRLlc/o5S6rvOuVcAL9Fas3LlSlauXPmcKIpeWq1W39/X14fWel76LyaN2u02Dz74II888sg9eTRvGBgYoF6vU6/XKZfLZFnWHQFYa5mbm+ses7OztNvt54nI+cGRe9WeKWBnwfZDWL4O4t/GZfk4H4i5i6Z9CBdCyItI1Wdw6m3zskH37u2jNCI48DRYMbuOUN2F0ys75+XSYGfJOBudfhcVDGIoLywx5zX+wqVHk4Auc9Q1hEUYcBXusqs5UU2jsIskOJYuYDkxjDEkSYLWmjAMr82y7MvNZvOvlFL312o1BgcH33fw4EF27dr199Za+vv76e/vXyRBD/cHQTDlnNu4bdu2UWvtvrm5OdasWcOqVatI05Qoimg2m+zcubNb/OXRv7lUKj03WDrnS9H/mc5ivpxO2VyNnjsNm/e1DlAKtLmUMIasD0RDI3o7kb0blX61M2yU3hHFNlDnoe1uSmYbzkKmOmP+TuTcA/ErseUmQRlkiSGAuOcDPwHWLHHvNZzZhcseQhZtJAiBlwP7gIHF70mMNO/9D7si3WFHOElNM+OiJy3AcnsHtNY0Gg1arRYi8pVKpfKZKIrOL5fLF2ut51qt1huttTe02+05a203jfcKkGUZQRAwOTlZFIwfDcPw2iAILt26deu7TjnlFOr1OsWkUHHPWZZRq9Wo1+s0m80TZmdnn1ur1W5eSoDrwH0irwAdjkGQyqLGLCmYSd7B/tZ9lCxkJRip5IHobiJxD6CDrQT2Gd31gExBlHyJauww6vD6PwpS93dgP0CY19padTLPYi7Pj6VjXLEZZd+MWbSSOADcskzbxYj9DZza16BEgOV/mqKAm5mZQUQIw/ATtVrtylardW6WZXNhGFKpVD528sknIyLEcTyvAOzNJEWDhmH46VardeEJJ5zwzg0bNtw/NjZ2U7VapdFozCtKlVKkaYoxBufcx8Mw5M4777xmqbWAQWDwqAk0UBeTuOuYSju7eaIMxqSzRiBAovcwGz6TkeaNKP367vNUTuGKvQJAYC3Tfedi0y30tzqZQLsjrdwe69juOD8nbplV41+ZOI4ZHR1lYmIC5xxJknw+juMrjTHXWmuHjTG3Oed25Js3usdSWSbLsiKTYIzZ4JzbPjk5+dU4jk9uNpubFq5LFPXE/v37N4vIRq31NWvXrt0WPJk6qTM1IPch7s9xbidaoKw6uSJQ8x+9ks6CT0O/ASp309/8LEYOT+woBdZux2Vn4tTj3UmnsNRJPsXNP9nVACPCUNLJNk/Ik9nx0BlTCOjDo4niF10NPJRvnDniPED+oYvz3UcLKulOw+WbNRARgiB43BjzD9bai0qlEtVq9ZrivSRJaDabvQJ0r6WUcsYY5ubmiih/NI7jZyilbjfGXA5cppS6GbgTOJRvojlTRIrVxE9aa987MTHR3RK2Mt/1ssTCULGMyw9x8lWw24958q3Y82f055D0uxB8HdSqznvJ9Vh1UWfjRlcuiHW+j7DTaaC4l86Gr4PH8I3PoJLt5Kd1gF2MTf+CNNh9DJ8bAPbjSHAQq+4cx0PAI/n3PwuIl7lGFVDOub6eWqAB7BKRn/SOw4u9gvnxubxhbnfOfaeYGl5ixHG/iPxM8tqmyA7FHL+19gngVK31uSLycWPM64DXLZif2FYqlS7OsuxH1lriOEaOt6r1/N/Abwv3Ani8AB4vgMcL4PECeLwAHi+Axwvg8QJ4vAAeL4DHC+DxAni8AB4vgMcL4PECeLwAHi+Axwvg8QJ4vAAeL4DHC+DxAni8AB4vgMcL4PECeLwAHi+Axwvg8QJ4vAAeL4DHC+DxAni8AB4vgMcL4PECeLwAHi+Axwvg8QJ4vAAeL4DHC+DxAni8AB4vgMcL4Pk18N8DAJNcrrsfubvlAAAAAElFTkSuQmCC
+label: DELL ECS CF Broker 
+description: Elastic Cloud Storage CF Broker
+product_version: '1.5'
+metadata_version: 1.5
+rank: 50
+
+releases:
+- name: ecs_broker
+  version: '1.5'
+  file: ecs_broker-1.5.tgz 
+
+stemcell_criteria:
+  os: ubuntu-trusty
+  version: '3363.15'
+  requires_cpi: false
+
+property_blueprints:
+- name: encryption_key
+  type: secret
+- name: vm_credentials
+  type: salted_credentials
+  default:
+    identity: vcap
+- name: app_name
+  type: string
+  configurable: true
+  default: EcsServiceBroker
+- name: app_version
+  type: string
+  configurable: true
+  default: v1
+- name: app_uri
+  type: string
+  configurable: true
+  default: ecs-broker
+- name: create_open_security_group
+  type: boolean
+  configurable: true
+  default: true
+- name: enable_global_access_to_plans
+  type: boolean
+  configurable: true
+  default: true
+- name: managementEndpoint
+  type: string
+  configurable: true
+- name: objectEndpoint
+  type: string
+  configurable: true
+- name: replicationGroup
+  type: string
+  configurable: true
+- name: namespace
+  type: string
+  configurable: true
+- name: baseUrl
+  type: string
+  configurable: true
+  optional: true
+- name: repositoryEndpoint
+  type: string
+  configurable: true
+  optional: true
+- name: repositoryUser
+  type: string
+  configurable: true
+  optional: true
+- name: repositoryBucket
+  type: string
+  configurable: true
+  optional: true
+- name: apiUserName
+  type: string
+  configurable: true
+- name: apiPassword
+  type: string
+  configurable: true
+- name: prefix
+  type: string
+  configurable: true
+  optional: true
+- name: certificate
+  type: text
+  configurable: true
+- name: securityUser
+  type: string
+  configurable: true
+  default: user
+- name: securityPassword
+  type: string
+  configurable: true
+  default: password
+
+
+# CUSTOM_VARIABLE_DEFN_END_MARKER
+- name: org_quota
+  type: integer
+  configurable: false
+  constraints:
+    min: 512
+    max: 4096
+  default: 4096
+- name: memory
+  type: integer
+  configurable: false
+  constraints:
+    min: 256
+    max: 4096
+  default: 4096
+- name: internal_service_names
+  type: string
+  configurable: false
+  default: "ecs-bucket"
+form_types:
+- name: ecs_broker_app
+  label: Service Broker Application
+  description: Service Broker configuration
+  property_inputs:
+    - reference: .properties.app_name
+      label: Service Broker Application Name
+      description: 'Enter the name for the Service Broker App'
+  
+    - reference: .properties.app_version
+      label: Service Broker Application version
+      description: 'Enter the version of the Service Broker App (Final app name would include app version like ${appName}-${appversion}'
+ 
+    - reference: .properties.app_uri
+      label: Service Broker Application URI
+      description: 'Enter the uri/endpoint for the Service Broker app (on push to CF)'
+ 
+    - reference: .properties.create_open_security_group
+      label: Open up Security Groups
+      description: 'Open up security group on CF for Service Broker to access other apps or CF Cloud Controller'
+ 
+    - reference: .properties.enable_global_access_to_plans
+      label: Enable Global access to all Services and Plans
+      description: 'Open up access to all service plans across all orgs and spaces'
+ 
+    - reference: .properties.managementEndpoint
+      label: ECS Management Endpoint
+      description: 'Enter the uri/endpoint for the ECS HTTPS management API'
+ 
+    - reference: .properties.objectEndpoint
+      label: ECS Object Endpoint
+      description: 'Enter the uri/endpoint for the ECS S3 API.  Not needed the base URL endpoint should be used.'
+ 
+    - reference: .properties.baseUrl
+      label: ECS Base URL
+      description: '(Optional) Enter the name of the ECS configured base URL that should be used with bucket credentials.'
+ 
+    - reference: .properties.repositoryEndpoint
+      label: Repository Endpoint
+      description: '(Optional) Enter the uri/endpoint for the ECS S3 API that should be used for persisting broker metadata.  Defaults to the object endpoint or base url.'
+ 
+    - reference: .properties.replicationGroup
+      label: Replication Group
+      description: 'Enter the ID of the ECS replication group to be used for created buckets.'
+ 
+    - reference: .properties.namespace
+      label: Namespace
+      description: 'Enter the name of the ECS namespace to be used for created buckets and users.'
+ 
+    - reference: .properties.repositoryUser
+      label: Repository User
+      description: '(Optional) Enter the name of the user that should be created/used for managing broker metadata.'
+ 
+    - reference: .properties.repositoryBucket
+      label: Repository Bucket
+      description: '(Optional) Enter the name of the bucket that should be created/used for managing broker metadata.'
+ 
+    - reference: .properties.apiUserName
+      label: ECS Admin Username
+      description: 'Enter the name of the ECS Management API user.'
+ 
+    - reference: .properties.apiPassword
+      label: ECS Admin Password
+      description: 'Enter the ECS Management API password.'
+ 
+    - reference: .properties.prefix
+      label: ECS Repository Prefix
+      description: '(Optional) Enter a string used to prefix broker created buckets and users.'
+ 
+    - reference: .properties.certificate
+      label: ECS Management Certification
+      description: 'Certification to enable broker to communicate with ECS API Managment'
+
+    - reference: .properties.securityUser
+      label: ECS Broker Security Username
+      description: 'Enter the name to register broker.  Defaults to "user".'
+
+    - reference: .properties.securityPassword
+      label: ECS Broker Password
+      description: ' Enter the password to register broker.  Defaults to "password"'
+
+job_types:
+- name: deploy-service-broker
+  resource_label: Deploy Ecs Service Broker
+  errand: true
+  templates:
+  - name: deploy-service-broker
+    release: ecs_broker
+  resource_definitions:
+  - name: ram
+    type: integer
+    configurable: false
+    default: 1024
+  - name: ephemeral_disk
+    type: integer
+    configurable: false
+    default: 1024
+  - name: persistent_disk
+    type: integer
+    configurable: false
+    default: 0
+  - name: cpu
+    type: integer
+    configurable: false
+    default: 1
+  static_ip: 0
+  dynamic_ip: 1
+  max_in_flight: 1
+  instance_definitions:
+  - name: instances
+    type: integer
+    configurable: false
+    default: 1
+  property_blueprints:
+  - name: vm_credentials
+    type: salted_credentials
+    default:
+      identity: vcap
+  - name: broker_credentials
+    type: salted_credentials
+
+  manifest: |
+    domain: (( ..cf.cloud_controller.system_domain.value ))
+    app_domains:
+      - (( ..cf.cloud_controller.apps_domain.value ))
+    ssl:
+      skip_cert_verify: (( ..cf.ha_proxy.skip_cert_verify.value ))
+    uaa:
+      url: https://uaa.(( ..cf.cloud_controller.system_domain.value ))
+      clients:
+        ecs_broker:
+          secret: test
+    ecs_broker:
+      app_name: (( .properties.app_name.value ))
+      app_version: (( .properties.app_version.value ))
+      app_uri: (( .properties.app_uri.value ))
+      create_open_security_group: (( .properties.create_open_security_group.value ))
+      app_push:
+        org_quota: (( .properties.org_quota.value ))
+        timeout: 180
+        memory: (( .properties.memory.value ))
+      persistence_store_type: none
+      encryption_key: (( .properties.encryption_key.value ))
+      cf:
+        admin_user: (( ..cf.uaa.system_services_credentials.identity ))
+        admin_password: (( ..cf.uaa.system_services_credentials.password ))
+      broker:
+        internal_service_names: (( .properties.internal_service_names.value ))
+        managementEndpoint: (( .properties.managementEndpoint.value ))
+        objectEndpoint: (( .properties.objectEndpoint.value ))
+        baseUrl: (( .properties.baseUrl.value ))
+        repositoryEndpoint: (( .properties.repositoryEndpoint.value ))
+        replicationGroup: (( .properties.replicationGroup.value ))
+        namespace: (( .properties.namespace.value ))
+        repositoryUser: (( .properties.repositoryUser.value ))
+        repositoryBucket: (( .properties.repositoryBucket.value ))
+        username: (( .properties.apiUserName.value ))
+        password: (( .properties.apiPassword.value ))
+        prefix: (( .properties.prefix.value ))
+        certificate: (( .properties.certificate.value ))
+        securityUser: (( .properties.securityUser.value ))
+        securityPassword: (( .properties.securityPassword.value ))
+
+- name: register-broker
+  resource_label: Register Ecs Service Broker
+  templates:
+  - name: register-broker
+    release: ecs_broker-1.5
+  errand: true
+  resource_definitions:
+  - name: ram
+    type: integer
+    configurable: false
+    default: 1024
+  - name: ephemeral_disk
+    type: integer
+    configurable: false
+    default: 1024
+  - name: persistent_disk
+    type: integer
+    configurable: false
+    default: 0
+  - name: cpu
+    type: integer
+    configurable: false
+    default: 1
+  static_ip: 0
+  dynamic_ip: 1
+  max_in_flight: 1
+  instance_definitions:
+  - name: instances
+    type: integer
+    configurable: false
+    default: 1
+  property_blueprints:
+  - name: vm_credentials
+    type: salted_credentials
+    default:
+      identity: vcap
+
+  manifest: |
+    domain: (( ..cf.cloud_controller.system_domain.value ))
+    app_domains:
+      - (( ..cf.cloud_controller.apps_domain.value ))
+    ssl:
+      skip_cert_verify: (( ..cf.ha_proxy.skip_cert_verify.value ))
+    uaa:
+      url: https://uaa.(( ..cf.cloud_controller.system_domain.value ))
+      clients:
+        ecs_broker:
+          secret: test
+    ecs_broker:
+      app_name: (( .properties.app_name.value ))
+      app_version: (( .properties.app_version.value ))
+      app_uri: (( .properties.app_uri.value ))
+      encryption_key: (( .properties.encryption_key.value ))
+      enable_global_access_to_plans: (( .properties.enable_global_access_to_plans.value ))
+      cf:
+        admin_user: (( ..cf.uaa.system_services_credentials.identity ))
+        admin_password: (( ..cf.uaa.system_services_credentials.password ))
+      broker:
+        securityUser: (( .properties.securityUser.value ))
+        securityPassword: (( .properties.securityPassword.value ))
+        internal_service_names: (( .properties.internal_service_names.value ))
+
+- name: destroy-broker
+  resource_label: Remove Ecs Service Broker
+  templates:
+  - name: destroy-broker
+    release: ecs_broker-1.5
+  errand: true
+  resource_definitions:
+  - name: ram
+    type: integer
+    configurable: false
+    default: 1024
+  - name: ephemeral_disk
+    type: integer
+    configurable: false
+    default: 1024
+  - name: persistent_disk
+    type: integer
+    configurable: false
+    default: 0
+  - name: cpu
+    type: integer
+    configurable: false
+    default: 1
+  static_ip: 0
+  dynamic_ip: 1
+  max_in_flight: 1
+  instance_definitions:
+  - name: instances
+    type: integer
+    configurable: false
+    default: 1
+  property_blueprints:
+  - name: vm_credentials
+    type: salted_credentials
+    default:
+      identity: vcap
+
+  manifest: |
+    domain: (( ..cf.cloud_controller.system_domain.value ))
+    app_domains:
+      - (( ..cf.cloud_controller.apps_domain.value ))
+    ssl:
+      skip_cert_verify: (( ..cf.ha_proxy.skip_cert_verify.value ))
+    uaa:
+      url: https://uaa.(( ..cf.cloud_controller.system_domain.value ))
+      clients:
+        ecs_broker:
+          secret: test
+    ecs_broker:
+      app_name: (( .properties.app_name.value ))
+      app_version: (( .properties.app_version.value ))
+      app_uri: (( .properties.app_uri.value ))
+      encryption_key: (( .properties.encryption_key.value ))
+      cf:
+        admin_user: (( ..cf.uaa.system_services_credentials.identity ))
+        admin_password: (( ..cf.uaa.system_services_credentials.password ))
+      broker:
+        internal_service_names: (( .properties.internal_service_names.value ))
+        securityUser: (( .properties.securityUser.value ))
+        securityPassword: (( .properties.securityPassword.value ))
+
+- name: compilation
+  resource_label: compilation
+  resource_definitions:
+   - name: ram
+     type: integer
+     configurable: true
+     default: 1024
+   - name: ephemeral_disk
+     type: integer
+     configurable: true
+     default: 1024
+   - name: persistent_disk
+     type: integer
+     configurable: true
+     default: 0
+   - name: cpu
+     type: integer
+     configurable: true
+     default: 2
+
+  static_ip: 0
+  dynamic_ip: 1
+  max_in_flight: 1
+
+  instance_definitions:
+    - name: instances
+      type: integer
+      default: 1
+
+update:
+  canaries: 1
+  canary_watch_time: 60000-240000
+  max_in_flight: 1
+  update_watch_time: 60000-240000
+
+requires_product_versions:
+- name: cf
+  version: "~> 1.0"
+provides_product_versions:
+- name: ecs_broker
+  version: '1.5'
+post_deploy_errands:
+- name: deploy-service-broker
+- name: register-broker
+pre_delete_errands:
+- name: destroy-broker
+

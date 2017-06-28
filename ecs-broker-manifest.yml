@@ -1,0 +1,119 @@
+director_uuid: 34267a73-c40a-4090-b521-6cb4dccad2e1
+
+stemcells:
+- alias: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+  os: ubuntu-trusty
+  version: '3363.15'
+
+jobs:
+- instances: 1
+  lifecycle: errand
+  name: deploy-service-broker
+  networks:
+  - name: default
+  azs: 
+  - pcf
+  templates:
+  - name: deploy-service-broker
+  vm_type: small
+  stemcell: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+
+- instances: 1
+  lifecycle: errand
+  name: register-broker
+  networks:
+  - name: default
+  azs:
+  -  pcf
+  templates:
+  - name: register-broker
+  vm_type: small
+  stemcell: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+
+- instances: 1
+  lifecycle: errand
+  name: destroy-broker
+  networks:
+  - name: default
+  azs:
+  - pcf
+  templates:
+  - name: destroy-broker
+  vm_type: small
+  stemcell: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+
+meta:
+  environment: ecs-broker
+  stemcell:
+    name: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+    os: ubuntu-trusty
+    version: '3363.15'
+
+
+name: ecs-broker
+
+properties:
+  app_domains: apps.pcf.asd.cse
+  domain: sys.pcf.asd.cse
+  app_name: EcsServiceBroker
+  memory: 512
+  org_quota: 1024
+  timeout: 180
+  app_uri: ecs-broker
+  app_version: v1
+  enable_global_access_to_plans: true
+  internal_service_names: ecs-bucket
+  password: ChangeMe
+  user: root
+  securityUser: user
+  securityPassword: password
+  namespace: ns1
+  replicationGroup: rp
+  managementEndpoint: https://10.1.83.119:4443
+  objectEndpoint: http://10.1.83.119:9020
+  baseUrl: ""
+  repositoryEndpoint: http://10.1.83.119:9020
+  repositoryUser: ""
+  repositoryBucket: ""
+  prefix: ""
+  brokerApiVersion: ""
+  certificate: |
+        -----BEGIN CERTIFICATE-----
+        MIIDCTCCAfGgAwIBAgIJAIVr+Mx++qwdMA0GCSqGSIb3DQEBCwUAMBQxEjAQBgNV
+        BAMTCWxvY2FsaG9zdDAeFw0xNzA0MjEyMjU1MjVaFw0yNzA0MTkyMjU1MjVaMBQx
+        EjAQBgNVBAMTCWxvY2FsaG9zdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+        ggEBANLbY5YEBiL/LqBMQI5beNrWUSJjqpR7QPuHKLO3zHGw7UBzIZ+tP3EeVQuJ
+        CJlZfnXb14PSEGWYfq8OKE5c+WMqLOzvCorDHvUSOdjvBAHXUaohhJk+vWRlC461
+        WDnYnYxvg4xe2K7ynU2X84WbpspMooVbxdLpZ4X1seChRJjiJEDmDzO+3DWOSVwu
+        9zi+EzUMCNkkCV9xF678+vvXhD/AvFJP1UgZ51/Ag9oCWTFfB4fLusNlCi6MWO/G
+        bMF+kfztD45cuS/mFdxfmGhuqJDj/JdB9mEgbMnXspzNOc4rByDSZ2nWt7S5cApV
+        XI3DNiym9+H545tHYAHHP+rcU/cCAwEAAaNeMFwwHwYDVR0jBBgwFoAUgiwtAFE1
+        7ya//pvkLdts+S1Y4TwwGgYDVR0RBBMwEYIJbG9jYWxob3N0hwR/AAABMB0GA1Ud
+        DgQWBBSCLC0AUTXvJr/+m+Qt22z5LVjhPDANBgkqhkiG9w0BAQsFAAOCAQEALAoG
+        YR/NZCazeV27tK3oxUC/wqLPLyX5VsEbADzlL3RGNou/Qp8y3nwsyHcUzb2W/fNk
+        UU6gG8BTNTZHZzN+yp2St7UiO/wHVoB69+z+mP9r4+sofr4iN1GwjMEgxRYykruc
+        XQr3Eb/6c/ySDoxBwifVqmp7vN70VnN0MhIoCl0lbYXiRmTFUARsPwRwXpNFCfGn
+        J6y9euVo5Ra9G7XJBhwb5WGCCRB8DGd32PucsyB9Wykz7bvvVJawu7wbmSijtMlG
+        VAbxCd5qkzRQMTET/ClS7hRb6Jz2QnsDA1qSXyUNBiTCswCvD3obPEVK66E7gJf1
+        WVuW0vx9I5rWFmGJeQ==
+        -----END CERTIFICATE-----
+  cf:
+    admin_user: admin
+    admin_password: UezDX853P9DbctiMkLZoArRV_iI8vgKf
+  create_open_security_group: false
+  encryption_key: test
+  ssl:
+    skip_cert_verify: true
+  uaa:
+    clients:
+      ecs_broker:
+        secret: test
+releases:
+- name: ecs_broker
+  version: latest
+update:
+  canaries: 1
+  canary_watch_time: 1000-100000
+  max_in_flight: 50
+  update_watch_time: 1000-100000
+
