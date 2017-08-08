@@ -62,7 +62,7 @@ export BROKER_NAMESPACE=<%= properties.namespace %>
 export BROKER_REPOSITORY_USER=<%= properties.repositoryuser %>
 export BROKER_REPOSITORY_BUCKET=<%= properties.repositorybucket %>
 export BROKER_PREFIX=<%= properties.prefix %>
-export BROKER_BROKER_API_VERSION=<%= properties.brokerapiversion %>
+export BROKER_BROKER_API_VERSION=<%= properties.apiversion %>
 export BROKER_CERTIFICATE="<%= properties.certificate %>"
 
 export CF_HOME=`pwd`/home/cf
@@ -179,6 +179,11 @@ function modify_app() {
                 grep -v "prefix" application.yml > filename2; mv filename2 application.yml
         fi
 
+
+        if [ "${BROKER_BROKER_API_VERSION}" == "" ]; then
+                echo "Remove  api version from application.yml"
+                grep -v "broker-api-version" application.yml > filename2; mv filename2 application.yml
+        fi
 
 
     zip -r ${PACKAGE_PATH}/lib/${TARGET_APP} *

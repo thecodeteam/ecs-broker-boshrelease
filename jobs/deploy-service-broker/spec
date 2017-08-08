@@ -70,9 +70,8 @@ properties:
     description: 'ECS Password'
   prefix:
     description: 'ECS Repository Prefix'
-  apiVersion:
+  apiversion:
     description: 'ECS Broker API Version'
-
   ### ON_DEMAND_PLAN_BEGIN_MARKER
   on_demand_service_plans:
       description: 'Placeholder for an array of Service Plans'
