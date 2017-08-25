@@ -1,7 +1,6 @@
 #! /bin/bash
 set -e -x
 
-
   <%
     def grab_app_domain_name
       app_domains_str = properties.app_domains.to_s
@@ -18,24 +17,22 @@ set -e -x
 
 export SCHEME=https
 export PATH="/var/vcap/packages/cf_cli/bin:$PATH"
-export ADMIN_USER=<%= properties.ecs_broker.cf.admin_user %>
-export ADMIN_PASSWORD=<%= properties.ecs_broker.cf.admin_password %>
+export ADMIN_USER=<%= properties.cf.admin_user %>
+export ADMIN_PASSWORD=<%= properties.cf.admin_password %>
 export DOMAIN=<%= properties.domain %>
 export API_ENDPOINT=$SCHEME://api.$DOMAIN
 export APP_DOMAIN=<%="#{app_domain}"%>
-export APP_NAME=<%= properties.ecs_broker.app_name %>
-export APP_VERSION=<%= properties.ecs_broker.app_version %>
-export APP_URI=<%= properties.ecs_broker.app_uri %>
+export APP_NAME=<%= properties.app_name %>
+export APP_VERSION=<%= properties.app_version %>
+export APP_URI=<%= properties.app_uri %>
 export ORG=${APP_NAME}-service-org
 export SPACE=${APP_NAME}-service-space
 export BROKER_NAME=${APP_NAME}-${APP_VERSION}-service-broker
-export BROKER_USER=<%= properties.ecs_broker.broker.user %>
-export BROKER_PASS=<%= properties.ecs_broker.broker.password %>
 export BROKER_HOST=$SCHEME://${APP_URI}.${APP_DOMAIN}
 export DB_NAME=${APP_NAME}-${APP_VERSION}-mysql
 
 # Use this only when there are already inbuild plans that need to enabled for public
-export BROKER_INTERNAL_SERVICE_NAMES=<%= properties.ecs_broker.broker.internal_service_names %>
+export BROKER_INTERNAL_SERVICE_NAMES=<%= properties.internal_service_names %>
 
 function authenticate_and_target() {
   cf api $API_ENDPOINT <% if properties.ssl.skip_cert_verify %>--skip-ssl-validation<% end %>

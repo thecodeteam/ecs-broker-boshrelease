@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e -x
 
-
   <%
     def grab_app_domain_name
       app_domains_str = properties.app_domains.to_s
@@ -18,24 +17,24 @@ set -e -x
 
 export SCHEME=https
 export PATH="/var/vcap/packages/cf_cli/bin:$PATH"
-export ADMIN_USER=<%= properties.ecs_broker.cf.admin_user %>
-export ADMIN_PASSWORD=<%= properties.ecs_broker.cf.admin_password %>
+export ADMIN_USER=<%= properties.cf.admin_user %>
+export ADMIN_PASSWORD=<%= properties.cf.admin_password %>
 export DOMAIN=<%= properties.domain %>
 export API_ENDPOINT=$SCHEME://api.$DOMAIN
 export APP_DOMAIN=<%="#{app_domain}" %>
-export APP_NAME=<%= properties.ecs_broker.app_name %>
-export APP_VERSION=<%= properties.ecs_broker.app_version %>
-export APP_URI=<%= properties.ecs_broker.app_uri %>
-export ENABLE_GLOBAL_ACCESS=<%= properties.ecs_broker.enable_global_access_to_plans %>
+export APP_NAME=<%= properties.app_name %>
+export APP_VERSION=<%= properties.app_version %>
+export APP_URI=<%= properties.app_uri %>
+export ENABLE_GLOBAL_ACCESS=<%= properties.enable_global_access_to_plans %>
 export ORG=${APP_NAME}-service-org
 export SPACE=${APP_NAME}-service-space
 export BROKER_NAME=${APP_NAME}-${APP_VERSION}-service-broker
-export BROKER_USER=<%= properties.ecs_broker.broker.user %>
-export BROKER_PASS=<%= properties.ecs_broker.broker.password %>
+export SECURITY_USERNAME=<%= properties.security_username %>
+export SECURITY_PASSWORD=<%= properties.security_password %>
 export BROKER_HOST=$SCHEME://${APP_URI}.${APP_DOMAIN}
 
 # Use this only when there are already inbuild services that need to enabled for public
-export BROKER_INTERNAL_SERVICE_NAMES=<%= properties.ecs_broker.broker.internal_service_names %>
+export BROKER_INTERNAL_SERVICE_NAMES=<%= properties.internal_service_names %>
 
 function authenticate_and_target() {
   cf api $API_ENDPOINT <% if properties.ssl.skip_cert_verify %>--skip-ssl-validation<% end %>
@@ -46,9 +45,9 @@ function authenticate_and_target() {
 function register_broker() {
   broker=`cf service-brokers | grep $BROKER_NAME || true`
   if [[ -z "$broker" ]]; then
-    cf create-service-broker $BROKER_NAME $BROKER_USER $BROKER_PASS $BROKER_HOST
+    cf create-service-broker $BROKER_NAME $SECURITY_USERNAME $SECURITY_PASSWORD $BROKER_HOST
   else
-    cf update-service-broker $BROKER_NAME $BROKER_USER $BROKER_PASS $BROKER_HOST
+    cf update-service-broker $BROKER_NAME $SECURITY_USERNAME $SECURITY_PASSWORD $BROKER_HOST
   fi
 }
 
@@ -82,6 +81,7 @@ cf -v
 authenticate_and_target
 register_broker
 
-<% if  properties.ecs_broker.enable_global_access_to_plans %>
+<% if  properties.enable_global_access_to_plans %>
   publicize_services
 <% end %>
+
