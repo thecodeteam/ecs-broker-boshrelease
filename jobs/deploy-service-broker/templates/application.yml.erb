@@ -1,31 +1,37 @@
 broker:
-  management-endpoint: <%= properties.management_endpoint %>
+  management-endpoint: "<%= properties.management_endpoint %>"
   replication-group: <%= properties.replication_group %>
   namespace: <%= properties.namespace %>
-  username: <%= properties.api_username%>
+<% unless properties.api_username.to_s.empty? -%>
+  username: <%= properties.api_username %>
+<% end -%>
+<% unless properties.api_password.to_s.empty? -%>
   password: <%= properties.api_password%>
-  broker-api-version: <%= properties.api_version %>
-  <% unless properties.object_endpoint.to_s.empty? -%>
+<% end -%>
+<% unless properties.api_version.to_s.empty? -%>
+  broker-api-version: "<%= properties.api_version %>"
+<% end -%>
+<% unless properties.object_endpoint.to_s.empty? -%>
   object-endpoint: <%= properties.object_endpoint %>
-  <% end -%>
-  <% unless properties.repository_endpoint.to_s.empty? -%>
+<% end -%>
+<% unless properties.repository_endpoint.to_s.empty? -%>
   repository-endpoint: <%= properties.repository_endpoint%>
-  <% end -%>
-  <% unless properties.certificate.to_s.empty? -%>
+<% end -%>
+<% unless properties.certificate.to_s.empty? -%>
   certificate: ecs_cert.pem
-  <% end -%>
-  <% unless properties.base_url.to_s.empty? -%>
+<% end -%>
+<% unless properties.base_url.to_s.empty? -%>
   base-url: <%= properties.base_url %>
-  <% end -%>
-  <% unless properties.repository_user.to_s.empty? -%>
+<% end -%>
+<% unless properties.repository_user.to_s.empty? -%>
   repository-user: <%= properties.repository_user%>
-  <% end -%>
-  <% unless properties.repository_bucket.to_s.empty? -%>
+<% end -%>
+<% unless properties.repository_bucket.to_s.empty? -%>
   repository-bucket: <%= properties.repository_bucket %>
-  <% end -%>
-  <% unless properties.prefix.to_s.empty? -%>
+<% end -%>
+<% unless properties.prefix.to_s.empty? -%>
   prefix: <%= properties.prefix %>
-  <% end -%>
+<% end -%>
   repository-service-id: f3cbab6a-5172-4ff1-a5c7-72990f0ce2aa
   repository-plan-id: 89d20694-9ab0-4a98-bc6a-868d6d4ecf31
 security:
