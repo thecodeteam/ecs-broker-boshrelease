@@ -5,25 +5,25 @@ broker:
   username: <%= properties.api_username%>
   password: <%= properties.api_password%>
   broker-api-version: <%= properties.api_version %>
-  <% if properties.object_endpoint -%>
+  <% unless properties.object_endpoint.to_s.empty? -%>
   object-endpoint: <%= properties.object_endpoint %>
   <% end -%>
-  <% if properties.repository_endpoint -%>
+  <% unless properties.repository_endpoint.to_s.empty? -%>
   repository-endpoint: <%= properties.repository_endpoint%>
   <% end -%>
-  <% if properties.certificate -%>
+  <% unless properties.certificate.to_s.empty? -%>
   certificate: ecs_cert.pem
   <% end -%>
-  <% if properties.base_url -%>
+  <% unless properties.base_url.to_s.empty? -%>
   base-url: <%= properties.base_url %>
   <% end -%>
-  <% if properties.repository_user -%>
+  <% unless properties.repository_user.to_s.empty? -%>
   repository-user: <%= properties.repository_user%>
   <% end -%>
-  <% if properties.repository_bucket -%>
+  <% unless properties.repository_bucket.to_s.empty? -%>
   repository-bucket: <%= properties.repository_bucket %>
   <% end -%>
-  <% if properties.prefix -%>
+  <% unless properties.prefix.to_s.empty? -%>
   prefix: <%= properties.prefix %>
   <% end -%>
   repository-service-id: f3cbab6a-5172-4ff1-a5c7-72990f0ce2aa
