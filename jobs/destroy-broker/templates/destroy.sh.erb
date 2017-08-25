@@ -1,7 +1,6 @@
 #! /bin/bash
 set -e -x
 
-
   <%
     def grab_app_domain_name
       app_domains_str = properties.app_domains.to_s
@@ -29,8 +28,6 @@ export APP_URI=<%= properties.app_uri %>
 export ORG=${APP_NAME}-service-org
 export SPACE=${APP_NAME}-service-space
 export BROKER_NAME=${APP_NAME}-${APP_VERSION}-service-broker
-export BROKER_SECURITYUSER=<%= properties.securityuser %>
-export BROKER_SECURITYPASS=<%= properties.securitypassword %>
 export BROKER_HOST=$SCHEME://${APP_URI}.${APP_DOMAIN}
 export DB_NAME=${APP_NAME}-${APP_VERSION}-mysql
 

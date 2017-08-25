@@ -40,30 +40,15 @@ export CF_SKIP_SSL=<%= properties.ssl.skip_cert_verify %>
 export ORG_QUOTA=<%= properties.org_quota %>
 export APP_PUSH_TIMEOUT=<%= properties.timeout %>
 export APP_PUSH_MEMORY=<%= properties.memory %>
-export BROKER_NAME=${APP_NAME}-${APP_VERSION}-service-broker
-export BROKER_USER=<%= properties.username %>
-export BROKER_PASSWD=<%= properties.password %>
-export SECURITY_USER_NAME=<%= properties.securityuser %>
-export SECURITY_USER_PASSWORD=<%= properties.securitypassword %>
+
+export SECURITY_USERNAME=<%= properties.security_username %>
+export SECURITY_PASSWORD=<%= properties.security_password %>
+export BROKER_CERTIFICATE="<%= properties.certificate %>"
 
 export CREATE_OPEN_SECURITY_GROUP=<%= properties.create_open_security_group %>
 export DELETE_PREV_APP_INSTANCE=<%= properties.delete_prev_app_instance %>
 
-export SB_APP_ENV="setupServiceBrokerEnv.sh"
-
 export EXPLODED_APP_FOLDER="exploded-app-contents"
-
-export BROKER_OBJECT_ENDPOINT=<%= properties.objectendpoint %>
-export BROKER_MANAGEMENT_ENDPOINT=<%= properties.managementendpoint %>
-export BROKER_BASE_URL=<%= properties.baseurl %>
-export BROKER_REPOSITORY_ENDPOINT=<%= properties.repositoryendpoint %>
-export BROKER_REPLICATION_GROUP=<%= properties.replicationgroup %>
-export BROKER_NAMESPACE=<%= properties.namespace %>
-export BROKER_REPOSITORY_USER=<%= properties.repositoryuser %>
-export BROKER_REPOSITORY_BUCKET=<%= properties.repositorybucket %>
-export BROKER_PREFIX=<%= properties.prefix %>
-export BROKER_BROKER_API_VERSION=<%= properties.apiversion %>
-export BROKER_CERTIFICATE="<%= properties.certificate %>"
 
 export CF_HOME=`pwd`/home/cf
 mkdir -p $CF_HOME
@@ -148,44 +133,6 @@ function modify_app() {
     cp "$SCRIPT_PATH/../ecs_cert.pem" ecs_cert.pem
     cp "$SCRIPT_PATH/../application.yml" application.yml
 
-
-        if [ "${BROKER_REPLICATION_GROUP}" == "" ]; then
-            echo "Remove  replication-group from application.yml"
-                grep -v "replication-group" application.yml > filename2; mv filename2 application.yml
-        fi
-
-        if [ "${BROKER_NAMESPACE}" == "" ]; then
-            echo "Remove namespacet from application.yml"
-                grep -v "namespace" application.yml > filename2; mv filename2 application.yml
-        fi
-        if [ "${BROKER_BASE_URL}" == "" ]; then
-                echo "Remove  base-url from application.yml"
-                grep -v "base-url" application.yml > filename2; mv filename2 application.yml
-        fi
-        if [ "${BROKER_REPOSITORY_ENDPOINT}" == "" ]; then
-                echo "Remove  repository-endpoint from application.yml"
-                grep -v "repository-endpoint" application.yml > filename2; mv filename2 application.yml
-        fi
-        if [ "${BROKER_REPOSITORY_USER}" == "" ]; then
-                echo "Remove repository-user from application.yml"
-                grep -v "repository-user" application.yml > filename2; mv filename2 application.yml
-        fi
-        if [ "${BROKER_REPOSITORY_BUCKET}" == "" ]; then
-                echo "Remove  replication-bucket from application.yml"
-                grep -v "repository-bucket" application.yml > filename2; mv filename2 application.yml
-        fi
-        if [ "${BROKER_PREFIX}" == "" ]; then
-                echo "Remove  prefix from application.yml"
-                grep -v "prefix" application.yml > filename2; mv filename2 application.yml
-        fi
-
-
-        if [ "${BROKER_BROKER_API_VERSION}" == "" ]; then
-                echo "Remove  api version from application.yml"
-                grep -v "broker-api-version" application.yml > filename2; mv filename2 application.yml
-        fi
-
-
     zip -r ${PACKAGE_PATH}/lib/${TARGET_APP} *
   else
     cp ${PACKAGE_PATH}/lib/${APP_PREFIX_NAME}*.${EXTENSION_TYPE}  ${PACKAGE_PATH}/lib/${TARGET_APP}
@@ -228,7 +175,7 @@ function register_on_demand_plans() {
     mkdir -p /var/vcap/data/tmp
     # Sleep for a bit so the app is up
     sleep 30
-    app_endpoint=http://${BROKER_USER}:${BROKER_PASSWD}@${APP_URI}.${APP_DOMAIN}
+    app_endpoint=http://${SECURITY_USERNAME}:${SECURITY_PASSWORD}@${APP_URI}.${APP_DOMAIN}
     app_catalog_url=${app_endpoint}/v2/catalog
     catalog_output=`curl -X GET ${app_catalog_url} 2>/dev/null`
     log_debug "Service Broker App Catalog output : $catalog_output"
