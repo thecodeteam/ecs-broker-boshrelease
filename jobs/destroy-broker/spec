@@ -21,9 +21,5 @@ properties:
     description: 'Username of the CF admin user'
   cf.admin_password:
     description: 'Password of the CF admin user'
-  securityuser:
-    description: 'Broker basic auth user'
-  securitypassword:
-    description: 'Broker basic auth password'
   internal_service_names:
     description: 'name of in-built services in the Service Broker Application'
