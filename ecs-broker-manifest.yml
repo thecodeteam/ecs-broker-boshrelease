@@ -129,6 +129,7 @@ properties:
     name: ecs-bucket
     description: Elastic Cloud Storage S3 Protocol Bucket
     bindable: true
+    repository_service: true
     settings:
       service_type: bucket
       head_type: s3
@@ -161,6 +162,7 @@ properties:
     - id: 3
       name: unlimited
       description: Pay per GB for Month
+      repository_plan: true
       metadata:
         costs:
         - usd: 0.03

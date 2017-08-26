@@ -1,3 +1,5 @@
+<% repo_svc = properties.catalog_services.find{|s| s.repository_service == true} -%>
+<% repo_plan = repo_svc.plans.find{|p| p.repository_plan == true} -%>
 broker:
   management-endpoint: "<%= properties.management_endpoint %>"
   replication-group: <%= properties.replication_group %>
@@ -32,8 +34,8 @@ broker:
 <% unless properties.prefix.to_s.empty? -%>
   prefix: <%= properties.prefix %>
 <% end -%>
-  repository-service-id: f3cbab6a-5172-4ff1-a5c7-72990f0ce2aa
-  repository-plan-id: 89d20694-9ab0-4a98-bc6a-868d6d4ecf31
+  repository-service-id: <%= repo_svc.id %>
+  repository-plan-id: <%= repo_plan.id %>
 security:
   <%= properties.security_username %>:
     password: <%= properties.security_password %>
