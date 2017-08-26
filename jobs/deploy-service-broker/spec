@@ -72,6 +72,5 @@ properties:
     description: 'ECS Repository Prefix'
   api_version:
     description: 'ECS Broker API Version'
-  ### ON_DEMAND_PLAN_BEGIN_MARKER
-  on_demand_service_plans:
-      description: 'Placeholder for an array of Service Plans'
+  catalog_services:
+      description: 'Dynamically Configured Service & Plans'

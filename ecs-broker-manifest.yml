@@ -3,7 +3,7 @@ director_uuid: 34267a73-c40a-4090-b521-6cb4dccad2e1
 stemcells:
 - alias: bosh-vsphere-esxi-ubuntu-trusty-go_agent
   os: ubuntu-trusty
-  version: '3363.15'
+  version: '3363.30'
 
 jobs:
 - instances: 1
@@ -47,15 +47,15 @@ meta:
   stemcell:
     name: bosh-vsphere-esxi-ubuntu-trusty-go_agent
     os: ubuntu-trusty
-    version: '3363.15'
+    version: '3363.30'
 
 
 name: ecs-broker
 
 properties:
-  app_domains: apps.pcf.asd.cse
-  domain: sys.pcf.asd.cse
-  app_name: EcsServiceBroker
+  app_domains: apps.cf.domain.com
+  domain: sys.cf.domain.com
+  app_name: ecs-broker
   memory: 512
   org_quota: 1024
   timeout: 180
@@ -63,40 +63,112 @@ properties:
   app_version: v1
   enable_global_access_to_plans: true
   internal_service_names: ecs-bucket
-  password: ChangeMe
-  user: root
-  securityUser: user
-  securityPassword: password
+  api_username: root
+  api_password: ChangeMe
+  security_username: user
+  security_password: password
   namespace: ns1
-  replicationGroup: rp
-  managementEndpoint: https://10.1.83.119:4443
-  objectEndpoint: http://10.1.83.119:9020
-  baseUrl: ""
-  repositoryEndpoint: http://10.1.83.119:9020
-  repositoryUser: ""
-  repositoryBucket: ""
-  prefix: ""
-  brokerApiVersion: ""
+  replication_group: rg1
+  management_endpoint: https://<ECS NODE>:4443
+  api_version: "*"
   certificate: |
-        -----BEGIN CERTIFICATE-----
-        MIIDCTCCAfGgAwIBAgIJAIVr+Mx++qwdMA0GCSqGSIb3DQEBCwUAMBQxEjAQBgNV
-        BAMTCWxvY2FsaG9zdDAeFw0xNzA0MjEyMjU1MjVaFw0yNzA0MTkyMjU1MjVaMBQx
-        EjAQBgNVBAMTCWxvY2FsaG9zdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
-        ggEBANLbY5YEBiL/LqBMQI5beNrWUSJjqpR7QPuHKLO3zHGw7UBzIZ+tP3EeVQuJ
-        CJlZfnXb14PSEGWYfq8OKE5c+WMqLOzvCorDHvUSOdjvBAHXUaohhJk+vWRlC461
-        WDnYnYxvg4xe2K7ynU2X84WbpspMooVbxdLpZ4X1seChRJjiJEDmDzO+3DWOSVwu
-        9zi+EzUMCNkkCV9xF678+vvXhD/AvFJP1UgZ51/Ag9oCWTFfB4fLusNlCi6MWO/G
-        bMF+kfztD45cuS/mFdxfmGhuqJDj/JdB9mEgbMnXspzNOc4rByDSZ2nWt7S5cApV
-        XI3DNiym9+H545tHYAHHP+rcU/cCAwEAAaNeMFwwHwYDVR0jBBgwFoAUgiwtAFE1
-        7ya//pvkLdts+S1Y4TwwGgYDVR0RBBMwEYIJbG9jYWxob3N0hwR/AAABMB0GA1Ud
-        DgQWBBSCLC0AUTXvJr/+m+Qt22z5LVjhPDANBgkqhkiG9w0BAQsFAAOCAQEALAoG
-        YR/NZCazeV27tK3oxUC/wqLPLyX5VsEbADzlL3RGNou/Qp8y3nwsyHcUzb2W/fNk
-        UU6gG8BTNTZHZzN+yp2St7UiO/wHVoB69+z+mP9r4+sofr4iN1GwjMEgxRYykruc
-        XQr3Eb/6c/ySDoxBwifVqmp7vN70VnN0MhIoCl0lbYXiRmTFUARsPwRwXpNFCfGn
-        J6y9euVo5Ra9G7XJBhwb5WGCCRB8DGd32PucsyB9Wykz7bvvVJawu7wbmSijtMlG
-        VAbxCd5qkzRQMTET/ClS7hRb6Jz2QnsDA1qSXyUNBiTCswCvD3obPEVK66E7gJf1
-        WVuW0vx9I5rWFmGJeQ==
-        -----END CERTIFICATE-----
+    -----BEGIN CERTIFICATE-----
+    MIIDCDCCAfCgAwIBAgIIJ0OyGOGnpXMwDQYJKoZIhvcNAQELBQAwFDESMBAGA1UE
+    AxMJbG9jYWxob3N0MB4XDTE3MDMyOTE3NDExM1oXDTI3MDMyNzE3NDExM1owFDES
+    MBAGA1UEAxMJbG9jYWxob3N0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+    AQEAlvj2E3wBgbGtFL1xsHBAw3MTlWo4I2zE8t5JV6f/TWwMXxka7VI5ZbE9RpaR
+    wM8mXnD0+kC0GoHh1SR71V79KvkDxuU3JMTNWk1FCq7vSU8DJpSAwOb0grGwTnET
+    3MP8C2ZRKd4StXxV91rWd0j9iF2sS59LsB6+s/9wFxzEHpIFrCpYYH1sGdFX/y/6
+    sTnx98PjueFydzJKKX7y/S3dNQcG5q7ub8fFgskbCSWWd1+aP4EKka/8/lz+0fHn
+    7oFO0eo1LOGW9dQX9yrwpby6YOL8wgB+RXwfO8X0FePu5Vo3ZoDwj4VPnzsWI3Gz
+    hLS+7N1kduVadNcVl8K8cGIGTwIDAQABo14wXDAfBgNVHSMEGDAWgBTmzEHRXygg
+    4Fwotwqck3GXkpe/sTAaBgNVHREEEzARgglsb2NhbGhvc3SHBH8AAAEwHQYDVR0O
+    BBYEFObMQdFfKCDgXCi3CpyTcZeSl7+xMA0GCSqGSIb3DQEBCwUAA4IBAQAESguj
+    UT8E32PLl+afvkDiflC/x9+XjPGGC7tePRl4HlmPAApcpjRfcPKlSHfEes2gnpsY
+    BaO6C8974+6r1lauaFZcTP7x+G5Lm2D3QD2SBeuSPhupxqMjw6gKekV6SD3iSiYL
+    u5X+q0Zyn1UertQ8AKTE1Y5AVIcuz5wWniPwU/8EKqd0fLrUiwluuXIWJhmCY8T4
+    quVg9o1LgKNxXp6Jpb+6bUf+e4MztNulwSDeRxC+ykHoGvQEaVfVHGsLfXMvrElU
+    m4NFF7OTqiMFeTcZJOvOZC/KOlj0L5zVldM1YD4Kztboin2np1ikBJR/64ovLHal
+    I4GmYvOn2T7wveLu
+    -----END CERTIFICATE-----
+
+  catalog_services:
+  - id: 1
+    name: ecs-namespace
+    description: Elastic Cloud Namespace
+    bindable: true
+    settings:
+      service_type: namespace
+    tags:
+      - s3
+      - namespace
+    metadata:
+      display_name: ecs-namespace
+      image_url: http://www.emc.com/images/products/header-image-icon-ecs.png
+      long_description: Dell EMC Elastic Cloud Storage (ECS) Namespace for managing Amazon S3, Swift or Atmos buckets.
+      provider_display_name: Dell EMC
+      documentation_url: https://community.emc.com/docs/DOC-45012
+      support_url: http://www.emc.com/products-solutions/trial-software-download/ecs.htm
+    plans:
+    - id: 1
+      name: 5gb
+      description: Free Trial
+      settings:
+        quota:
+          limit: 5
+          warn: 4
+      metadata:
+        costs:
+        - usd: 5.0
+          unit: MONTHLY
+        bullets:
+        - Multiple Bucket Namespace
+        - 5 GB Storage
+        - S3 protocol and HDFS access
+  - id: 2
+    name: ecs-bucket
+    description: Elastic Cloud Storage S3 Protocol Bucket
+    bindable: true
+    settings:
+      service_type: bucket
+      head_type: s3
+      file_accessible: false
+      access_during_outage: true
+    metadata:
+      display_name: ecs-bucket
+      image_url: http://www.emc.com/images/products/header-image-icon-ecs.png
+      long_description: EMC Elastic Cloud Storage (ECS) Object bucket for storing data using Amazon S3, Swift or Atmos protocols.
+      provider_display_name: EMC Corporation
+      documentation_url: https://community.emc.com/docs/DOC-45012
+      support_url: http://www.emc.com/products-solutions/trial-software-download/ecs.htm
+    plans:
+    - id: 2
+      name: 5gb
+      description: Free Trial
+      settings:
+        quota:
+          limit: 5
+          warn: 4
+      free: true
+      metadata:
+        costs:
+        - usd: 0.0
+          unit: MONTHLY
+        bullets:
+        - Shared object storage
+        - 5 GB Storage
+        - S3 protocol and HDFS access
+    - id: 3
+      name: unlimited
+      description: Pay per GB for Month
+      metadata:
+        costs:
+        - usd: 0.03
+          unit: PER GB PER MONTH
+        bullets:
+        - Shared object storage
+        - Unlimited Storage
+        - S3 protocol and HDFS access
   cf:
     admin_user: admin
     admin_password: UezDX853P9DbctiMkLZoArRV_iI8vgKf
@@ -116,4 +188,3 @@ update:
   canary_watch_time: 1000-100000
   max_in_flight: 50
   update_watch_time: 1000-100000
-
