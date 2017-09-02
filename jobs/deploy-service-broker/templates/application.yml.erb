@@ -34,156 +34,132 @@ broker:
 <% unless properties.prefix.to_s.empty? -%>
   prefix: <%= properties.prefix %>
 <% end -%>
-  repository-service-id: <%= repo_svc.id %>
-  repository-plan-id: <%= repo_plan.id %>
+  repository-service-id: <%= repo_svc.service_guid %>
+  repository-plan-id: <%= repo_plan.plan_guid %>
 security:
   <%= properties.security_username %>:
     password: <%= properties.security_password %>
 catalog:
   services:
 <% properties.catalog_services.each do |s| -%>
-  - id: <%= s.id %>
+<% if s.active -%>
+  - id: <%= s.service_guid %>
     name: <%= s.name %>
     description: <%= s.description %>
     plan-updatable: true
 <% unless s.bindable.to_s.empty? -%>
     bindable: <%= s.bindable %>
 <% end -%>
-<% unless s.tags.nil? -%>
+<% unless s.tags.to_s.empty? -%>
     tags:
 <% s.tags.each do |t| -%>
     - <%= t %>
 <% end -%>
 <% end -%>
-<% unless s.settings.nil? -%>
-<% if s.settings.file_accessible == true -%>
+<% if s.file_accessible == true -%>
     requires:
     - volume_mount
 <% end -%>
     service-settings:
-<% unless s.settings.service_type.to_s.empty? -%>
-      service-type: <%= s.settings.service_type %>
+      service-type: <%= s.service_type.downcase %>
+<% unless s.encrypted.to_s.empty? -%>
+      encrypted: <%= s.encrypted %>
 <% end -%>
-<% unless s.settings.encrypted.to_s.empty? -%>
-      encrypted: <%= s.settings.encrypted %>
+<% unless s.access_during_outage.to_s.empty? -%>
+      access-during-outage: <%= s.access_during_outage %>
 <% end -%>
-<% unless s.settings.access_during_outage.to_s.empty? -%>
-      access-during-outage: <%= s.settings.access_during_outage %>
+<% unless s.file_accessible.to_s.empty? -%>
+      file-accessible: <%= s.file_accessible %>
 <% end -%>
-<% unless s.settings.file_accessible.to_s.empty? -%>
-      file-accessible: <%= s.settings.file_accessible %>
+<% unless s.head_type.to_s.empty? -%>
+      head-type: <%= s.head_type %>
 <% end -%>
-<% unless s.settings.head_type.to_s.empty? -%>
-      head-type: <%= s.settings.head_type %>
+<% unless s.default_retention.to_s.empty? -%>
+      default-retention: <%= s.default_retention %>
 <% end -%>
-<% unless s.settings.default_retention.to_s.empty? -%>
-      default-retention: <%= s.settings.default_retention %>
-<% end -%>
-<% unless s.settings.quota.nil? -%>
+<% unless s.quota_limit.to_s.empty? && s.quota_warn.to_s.empty? -%>
       quota:
-        limit: <%= s.settings.quota.limit %>
-        warn: <%= s.settings.quota.warn %>
+<% unless s.quota_limit.to_s.empty? -%>
+        limit: <%= s.quota_limit %>
 <% end -%>
-<% unless s.settings.domain_group_admins.nil? -%>
+<% unless s.quota_warn.to_s.empty? -%>
+        warn: <%= s.quota_warn %>
+<% end -%>
+<% end -%>
+<% unless s.domain_group_admins.to_s.empty? -%>
       domain-group-admins:
-<% s.settings.domain_group_admins do |a| %>
+<% s.domain_group_admins do |a| %>
       - <%= a %>
 <% end -%>
 <% end -%>
-<% unless s.settings.compliance_enabled.to_s.empty? -%>
-      compliance-enabled: <%= s.settings.compliance_enabled %>
+<% unless s.compliance_enabled.to_s.empty? -%>
+      compliance-enabled: <%= s.compliance_enabled %>
 <% end -%>
-<% unless s.settings.default_bucket_quota.to_s.empty? -%>
-      default-bucket-quota: <%= s.settings.default_bucket_quota %>
+<% unless s.default_bucket_quota.to_s.empty? -%>
+      default-bucket-quota: <%= s.default_bucket_quota %>
 <% end -%>
-<% unless s.settings.default_bucket_quota.to_s.empty? -%>
-      default-bucket-quota: <%= s.settings.default_bucket_quota %>
-<% end -%>
-<% end -%>
-<% unless s.metadata.nil? -%>
+<% unless s.display_name.to_s.empty? &&
+    s.image_url.to_s.empty? &&
+    s.long_description.to_s.empty? &&
+    s.provider_display_name.to_s.empty? &&
+    s.documentation_url.to_s.empty? &&
+    s.support_url.to_s.empty? -%>
     metadata:
-<% unless s.metadata.display_name.to_s.empty? -%>
-      displayName: <%= s.metadata.displayName %>
+<% unless s.display_name.to_s.empty? -%>
+      displayName: <%= s.display_name %>
 <% end -%>
-<% unless s.metadata.image_url.to_s.empty? -%>
-      imageUrl: <%= s.metadata.image_url %>
+<% unless s.image_url.to_s.empty? -%>
+      imageUrl: <%= s.image_url %>
 <% end -%>
-<% unless s.metadata.long_description.to_s.empty? -%>
-      longDescription: <%= s.metadata.long_description %>
+<% unless s.long_description.to_s.empty? -%>
+      longDescription: <%= s.long_description %>
 <% end -%>
-<% unless s.metadata.provider_display_name.to_s.empty? -%>
-      providerDisplayName: <%= s.metadata.provider_display_name %>
+<% unless s.provider_display_name.to_s.empty? -%>
+      providerDisplayName: <%= s.provider_display_name %>
 <% end -%>
-<% unless s.metadata.documentation_url.to_s.empty? -%>
-      documentationUrl: <%= s.metadata.documentation_url %>
+<% unless s.documentation_url.to_s.empty? -%>
+      documentationUrl: <%= s.documentation_url %>
 <% end -%>
-<% unless s.metadata.support_url.to_s.empty? -%>
-      supportUrl: <%= s.metadata.support_url %>
+<% unless s.support_url.to_s.empty? -%>
+      supportUrl: <%= s.support_url %>
 <% end -%>
 <% end -%>
-<% unless s.plans.nil? -%>
+<% unless s.plans.empty? -%>
     plans:
 <% s.plans.each do |p| -%>
-    - id: <%= p.id %>
+    - id: <%= p.plan_guid %>
       name: <%= p.name %>
       description: <%= p.description %>
-<% unless p.free.to_s.empty? -%>
       free: <%= p.free %>
+<% unless p.repository_plan.to_s.empty? -%>
+      repository_plan: <%= p.repository_plan %>
 <% end -%>
-<% unless p.settings.nil? -%>
       service-settings:
-<% unless p.settings.service_type.to_s.empty? -%>
-        service-type: <%= p.settings.service_type %>
+<% unless p.access_during_outage.to_s.empty? -%>
+        access-during-outage: <%= p.access_during_outage %>
 <% end -%>
-<% unless p.settings.encrypted.to_s.empty? -%>
-        encrypted: <%= p.settings.encrypted %>
+<% unless p.default_retention.to_s.empty? -%>
+        default-retention: <%= p.default_retention %>
 <% end -%>
-<% unless p.settings.access_during_outage.to_s.empty? -%>
-        access-during-outage: <%= p.settings.access_during_outage %>
-<% end -%>
-<% unless p.settings.file_accessible.to_s.empty? -%>
-        file-accessible: <%= p.settings.file_accessible %>
-<% end -%>
-<% unless p.settings.head_type.to_s.empty? -%>
-        head-type: <%= p.settings.head_type %>
-<% end -%>
-<% unless p.settings.default_retention.to_s.empty? -%>
-        default-retention: <%= p.settings.default_retention %>
-<% end -%>
-<% unless p.settings.quota.nil? -%>
+<% unless p.quota_limit.to_s.empty? && p.quota_warn.to_s.empty? -%>
         quota:
-          limit: <%= p.settings.quota.limit %>
-          warn: <%= p.settings.quota.warn %>
+          limit: <%= p.quota_limit %>
+          warn: <%= p.quota_warn %>
 <% end -%>
-<% unless p.settings.domain_group_admins.nil? -%>
+<% unless p.domain_group_admins.to_s.empty? -%>
         domain-group-admins:
-<% p.settings.domain_group_admins do |a| %>
+<% p.domain_group_admins.each do |a| -%>
         - <%= a %>
 <% end -%>
 <% end -%>
-<% unless p.settings.compliance_enabled.to_s.empty? -%>
-        compliance-enabled: <%= p.settings.compliance_enabled %>
-<% end -%>
-<% unless p.settings.default_bucket_quota.to_s.empty? -%>
-        default-bucket-quota: <%= p.settings.default_bucket_quota %>
-<% end -%>
-<% unless p.settings.default_bucket_quota.to_s.empty? -%>
-        default-bucket-quota: <%= p.settings.default_bucket_quota %>
-<% end -%>
-<% end -%>
-<% unless p.metadata.nil? -%>
       metadata:
-<% unless p.metadata.costs.nil? -%>
         costs:
-<% p.metadata.costs.each do |c| -%>
         - amount:
-            usd: <%= c.usd %>
-            unit: <%= c.unit %>
-<% end -%>
-<% end -%>
-<% unless p.metadata.bullets.nil? -%>
+            usd: <%= p.cost_usd %>
+            unit: <%= p.cost_unit %>
+<% unless p.bullets.to_s.empty? -%>
         bullets:
-<% p.metadata.bullets.each do |b| -%>
+<% p.bullets.each do |b| -%>
         - <%= b %>
 <% end -%>
 <% end -%>
