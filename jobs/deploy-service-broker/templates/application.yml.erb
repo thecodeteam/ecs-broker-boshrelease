@@ -1,3 +1,5 @@
+<% repo_svc = properties.catalog_services.find{|s| s.repository_service == true} -%>
+<% repo_plan = repo_svc.plans.find{|p| p.repository_plan == true} -%>
 broker:
   management-endpoint: "<%= properties.management_endpoint %>"
   replication-group: <%= properties.replication_group %>
@@ -32,95 +34,136 @@ broker:
 <% unless properties.prefix.to_s.empty? -%>
   prefix: <%= properties.prefix %>
 <% end -%>
-  repository-service-id: f3cbab6a-5172-4ff1-a5c7-72990f0ce2aa
-  repository-plan-id: 89d20694-9ab0-4a98-bc6a-868d6d4ecf31
+  repository-service-id: <%= repo_svc.service_guid %>
+  repository-plan-id: <%= repo_plan.plan_guid %>
 security:
   <%= properties.security_username %>:
     password: <%= properties.security_password %>
 catalog:
   services:
-    - id: 09cac1c6-1b0a-11e6-b6ba-3e1d05defe78
-      name: ecs-namespace
-      description: Elastic Cloud Namespace
-      bindable: true
-      plan-updatable: true
-      tags:
-        - s3
-        - namespace
+<% properties.catalog_services.each do |s| -%>
+<% if s.active -%>
+  - id: <%= s.service_guid %>
+    name: <%= s.name %>
+    description: <%= s.description %>
+    plan-updatable: true
+<% unless s.bindable.to_s.empty? -%>
+    bindable: <%= s.bindable %>
+<% end -%>
+<% unless s.tags.to_s.empty? -%>
+    tags:
+<% s.tags.each do |t| -%>
+    - <%= t %>
+<% end -%>
+<% end -%>
+<% if s.file_accessible == true -%>
+    requires:
+    - volume_mount
+<% end -%>
+    service-settings:
+      service-type: <%= s.service_type.downcase %>
+<% unless s.encrypted.to_s.empty? -%>
+      encrypted: <%= s.encrypted %>
+<% end -%>
+<% unless s.access_during_outage.to_s.empty? -%>
+      access-during-outage: <%= s.access_during_outage %>
+<% end -%>
+<% unless s.file_accessible.to_s.empty? -%>
+      file-accessible: <%= s.file_accessible %>
+<% end -%>
+<% unless s.head_type.to_s.empty? -%>
+      head-type: <%= s.head_type %>
+<% end -%>
+<% unless s.default_retention.to_s.empty? -%>
+      default-retention: <%= s.default_retention %>
+<% end -%>
+<% unless s.quota_limit.to_s.empty? && s.quota_warn.to_s.empty? -%>
+      quota:
+<% unless s.quota_limit.to_s.empty? -%>
+        limit: <%= s.quota_limit %>
+<% end -%>
+<% unless s.quota_warn.to_s.empty? -%>
+        warn: <%= s.quota_warn %>
+<% end -%>
+<% end -%>
+<% unless s.domain_group_admins.to_s.empty? -%>
+      domain-group-admins:
+<% s.domain_group_admins do |a| %>
+      - <%= a %>
+<% end -%>
+<% end -%>
+<% unless s.compliance_enabled.to_s.empty? -%>
+      compliance-enabled: <%= s.compliance_enabled %>
+<% end -%>
+<% unless s.default_bucket_quota.to_s.empty? -%>
+      default-bucket-quota: <%= s.default_bucket_quota %>
+<% end -%>
+<% unless s.display_name.to_s.empty? &&
+    s.image_url.to_s.empty? &&
+    s.long_description.to_s.empty? &&
+    s.provider_display_name.to_s.empty? &&
+    s.documentation_url.to_s.empty? &&
+    s.support_url.to_s.empty? -%>
+    metadata:
+<% unless s.display_name.to_s.empty? -%>
+      displayName: <%= s.display_name %>
+<% end -%>
+<% unless s.image_url.to_s.empty? -%>
+      imageUrl: <%= s.image_url %>
+<% end -%>
+<% unless s.long_description.to_s.empty? -%>
+      longDescription: <%= s.long_description %>
+<% end -%>
+<% unless s.provider_display_name.to_s.empty? -%>
+      providerDisplayName: <%= s.provider_display_name %>
+<% end -%>
+<% unless s.documentation_url.to_s.empty? -%>
+      documentationUrl: <%= s.documentation_url %>
+<% end -%>
+<% unless s.support_url.to_s.empty? -%>
+      supportUrl: <%= s.support_url %>
+<% end -%>
+<% end -%>
+<% unless s.plans.empty? -%>
+    plans:
+<% s.plans.each do |p| -%>
+    - id: <%= p.plan_guid %>
+      name: <%= p.name %>
+      description: <%= p.description %>
+      free: <%= p.free %>
+<% unless p.repository_plan.to_s.empty? -%>
+      repository_plan: <%= p.repository_plan %>
+<% end -%>
       service-settings:
-        service-type: namespace
+<% unless p.access_during_outage.to_s.empty? -%>
+        access-during-outage: <%= p.access_during_outage %>
+<% end -%>
+<% unless p.default_retention.to_s.empty? -%>
+        default-retention: <%= p.default_retention %>
+<% end -%>
+<% unless p.quota_limit.to_s.empty? && p.quota_warn.to_s.empty? -%>
+        quota:
+          limit: <%= p.quota_limit %>
+          warn: <%= p.quota_warn %>
+<% end -%>
+<% unless p.domain_group_admins.to_s.empty? -%>
+        domain-group-admins:
+<% p.domain_group_admins.each do |a| -%>
+        - <%= a %>
+<% end -%>
+<% end -%>
       metadata:
-        displayName: ecs-namespace
-        imageUrl: http://www.emc.com/images/products/header-image-icon-ecs.png
-        longDescription: EMC Elastic Cloud Storage (ECS) Namespace for managing Amazon S3, Swift or Atmos buckets.
-        providerDisplayName: EMC Corporation
-        documentationUrl: https://community.emc.com/docs/DOC-45012
-        supportUrl: http://www.emc.com/products-solutions/trial-software-download/ecs.htm
-      plans:
-        - id: 09cac5b8-1b0a-11e6-b6ba-3e1d05defe78
-          name: 5gb
-          description: Free Trial
-          service-settings:
-            quota:
-              limit: 5
-              warn: 4
-          metadata:
-            costs:
-              - amount:
-                  usd: 5.0
-                unit: MONTHLY
-            bullets:
-              - Multiple Bucket Namespace
-              - 5 GB Storage
-              - S3 protocol and HDFS access
-    - id: f3cbab6a-5172-4ff1-a5c7-72990f0ce2aa
-      name: ecs-bucket
-      type: bucket
-      description: Elastic Cloud S3 Object Storage Bucket
-      bindable: true
-      plan-updatable: true
-      tags:
-        - s3
-        - bucket
-      service-settings:
-        service-type: bucket
-        head-type: s3
-        file-system-enabled: false
-        access-during-outage: true
-      metadata:
-        displayName: ecs-bucket
-        imageUrl: http://www.emc.com/images/products/header-image-icon-ecs.png
-        longDescription: EMC Elastic Cloud Storage (ECS) Object bucket for storing data using Amazon S3, Swift or Atmos protocols.
-        providerDisplayName: EMC Corporation
-        documentationUrl: https://community.emc.com/docs/DOC-45012
-        supportUrl: http://www.emc.com/products-solutions/trial-software-download/ecs.htm
-      plans:
-        - id: 8e777d49-0a78-4cf4-810a-b5f5173b019d
-          name: 5gb
-          description: Free Trial
-          service-settings:
-            quota:
-              limit: 5
-              warn: 4
-          free: true
-          metadata:
-            costs:
-              - amount:
-                  usd: 0.0
-                unit: MONTHLY
-            bullets:
-              - Shared object storage
-              - 5 GB Storage
-              - S3 protocol and HDFS access
-        - id: 89d20694-9ab0-4a98-bc6a-868d6d4ecf31
-          name: unlimited
-          description: Pay per GB for Month
-          metadata:
-            costs:
-              - amount:
-                  usd: 0.03
-                unit: PER GB PER MONTH
-            bullets:
-              - Shared object storage
-              - Unlimited Storage
-              - S3 protocol and HDFS access
+        costs:
+        - amount:
+            usd: <%= p.cost_usd %>
+            unit: <%= p.cost_unit %>
+<% unless p.bullets.to_s.empty? -%>
+        bullets:
+<% p.bullets.each do |b| -%>
+        - <%= b %>
+<% end -%>
+<% end -%>
+<% end -%>
+<% end -%>
+<% end -%>
+<% end -%>
