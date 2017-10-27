@@ -1,0 +1,8 @@
+builds:
+  23d63860-0bd8-44be-7a29-cdff31dfbf2f:
+    version: 1.5.2
+  564d57bc-c925-4f20-5f1d-ee1906a39e10:
+    version: 1.5.1
+  58896385-f7aa-47e1-6934-15a2d30039b6:
+    version: "1"
+format-version: "2"

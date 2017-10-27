@@ -1,0 +1,28 @@
+name: ecs_broker
+version: 1.5.1
+commit_hash: 0790ad3
+uncommitted_changes: false
+jobs:
+- name: deploy-service-broker
+  version: 991a304c70428af68135e49f46fc01ada72a45b2
+  fingerprint: 991a304c70428af68135e49f46fc01ada72a45b2
+  sha1: 977ed18480960152d2bfb051afa00fc1e75d7118
+- name: destroy-broker
+  version: 2bc329dd7649bfaafa1203741dadeb50aca1d831
+  fingerprint: 2bc329dd7649bfaafa1203741dadeb50aca1d831
+  sha1: 75c047c760c0a7ca944e2cd8e13901231dc03d2a
+- name: register-broker
+  version: d324610eeb9d4be36c5de36b56975516938f42ce
+  fingerprint: d324610eeb9d4be36c5de36b56975516938f42ce
+  sha1: c2ed833290f7666f0ee8170cf459fc8d6140c54a
+packages:
+- name: cf_cli
+  version: 94e9908c18268f3b621a503439d23120d6f586c1
+  fingerprint: 94e9908c18268f3b621a503439d23120d6f586c1
+  sha1: d9677a1a923fbbcf595ea789b40f6c837ac72f51
+  dependencies: []
+- name: ecs_service_broker
+  version: f363f5f1af81afb917480b2157364bbb217c6ee3
+  fingerprint: f363f5f1af81afb917480b2157364bbb217c6ee3
+  sha1: a6e893312ddf39b5d7d0e5efe443e72cf93a3b46
+  dependencies: []
