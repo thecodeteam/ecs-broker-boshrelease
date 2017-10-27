@@ -127,10 +127,9 @@ properties:
       free: true
       cost_usd: 0.0
       cost_unit: MONTHLY
-      bullets:
-      - Shared object storage
-      - 5 GB Storage
-      - S3 protocol access
+      bullet_1: Shared object storage
+      bullet_2: 5 GB Storage
+      bullet_3: S3 protocol access
   cf:
     admin_user: admin
     admin_password: UezDX853P9DbctiMkLZoArRV_iI8vgKf
