@@ -57,7 +57,7 @@ properties:
   app_domains: apps.cf.domain.com
   domain: sys.cf.domain.com
   app_name: ecs-broker
-  memory: 512
+  memory: 1024
   org_quota: 1024
   timeout: 180
   app_uri: ecs-broker
