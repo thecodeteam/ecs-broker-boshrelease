@@ -157,10 +157,26 @@ catalog:
         - amount:
             usd: <%= p.cost_usd %>
             unit: <%= p.cost_unit %>
-<% unless p.bullets.to_s.empty? -%>
+<% unless p.bullet_1.to_s.empty? &&
+    p.bullet_2.to_s.empty? &&
+    p.bullet_3.to_s.empty? &&
+    p.bullet_4.to_s.empty? &&
+    p.bullet_5.to_s.empty? -%>
         bullets:
-<% p.bullets.each do |b| -%>
-        - <%= b %>
+<% unless p.bullet_1.to_s.empty? -%>
+        - <%= p.bullet_1 %>
+<% end -%>
+<% unless p.bullet_2.to_s.empty? -%>
+        - <%= p.bullet_2 %>
+<% end -%>
+<% unless p.bullet_3.to_s.empty? -%>
+        - <%= p.bullet_3 %>
+<% end -%>
+<% unless p.bullet_4.to_s.empty? -%>
+        - <%= p.bullet_4 %>
+<% end -%>
+<% unless p.bullet_5.to_s.empty? -%>
+        - <%= p.bullet_5 %>
 <% end -%>
 <% end -%>
 <% end -%>

@@ -124,19 +124,13 @@ function wait_till_running() {
 function modify_app() {
   pushd $PACKAGE_PATH/$SUBDIR
 
-  if [ -n "${BROKER_CERTIFICATE}" ]; then
+  mkdir -p ${EXPLODED_APP_FOLDER}
 
-    mkdir -p ${EXPLODED_APP_FOLDER}
-
-    cd ${EXPLODED_APP_FOLDER}
-    unzip -o ${PACKAGE_PATH}/lib/${APP_PREFIX_NAME}*.${EXTENSION_TYPE}
-    cp "$SCRIPT_PATH/../ecs_cert.pem" ecs_cert.pem
-    cp "$SCRIPT_PATH/../application.yml" application.yml
-
-    zip -r ${PACKAGE_PATH}/lib/${TARGET_APP} *
-  else
-    cp ${PACKAGE_PATH}/lib/${APP_PREFIX_NAME}*.${EXTENSION_TYPE}  ${PACKAGE_PATH}/lib/${TARGET_APP}
-  fi
+  cd ${EXPLODED_APP_FOLDER}
+  unzip -o ${PACKAGE_PATH}/lib/${APP_PREFIX_NAME}*.${EXTENSION_TYPE}
+  cp "$SCRIPT_PATH/../ecs_cert.pem" ecs_cert.pem
+  cp "$SCRIPT_PATH/../application.yml" application.yml
+  zip -r ${PACKAGE_PATH}/lib/${TARGET_APP} *
 
   popd
 }
