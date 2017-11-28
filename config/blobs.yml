@@ -1,11 +1,8 @@
----
 cf_cli/cf-cli_6.23.1_linux_x86-64.tgz:
-  object_id: 6c2e620a-b1f7-4f0e-bf53-f80fa60c403a
-  sha: !binary |-
-    a195e99cae5ab17b453b0a0747508c8f3eee5cae
   size: 6692717
+  object_id: 6c2e620a-b1f7-4f0e-bf53-f80fa60c403a
+  sha: a195e99cae5ab17b453b0a0747508c8f3eee5cae
 ecs_service_broker/ecs-cf-service-broker.jar:
-  object_id: dec7ebc0-106e-4933-8e3e-cf2aab17ad21
-  sha: !binary |-
-    1de959fd74aba2561f1aecfc534be5345e601c75
-  size: 24201258
+  size: 25979121
+  object_id: c95e4bea-d295-4a1c-6c0a-c44e94626af3
+  sha: 3500b3d4a1c42e27f70d1771d73a99357c7e0f4b
