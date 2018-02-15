@@ -35,7 +35,7 @@ broker:
   prefix: <%= properties.prefix %>
 <% end -%>
   repository-service-id: <%= repo_svc.service_guid %>
-  repository-plan-id: <%= repo_plan.plan_guid %>
+  repository-plan-id: <%= repo_plan.guid %>
 security:
   <%= properties.security_username %>:
     password: <%= properties.security_password %>
@@ -127,7 +127,7 @@ catalog:
 <% unless s.plans.empty? -%>
     plans:
 <% s.plans.each do |p| -%>
-    - id: <%= p.plan_guid %>
+    - id: <%= p.guid %>
       name: <%= p.name %>
       description: <%= p.description %>
       free: <%= p.free %>
