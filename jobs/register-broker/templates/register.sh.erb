@@ -1,5 +1,4 @@
-#!/bin/bash
-set -e -x
+#! /bin/bash -e -x
 
   <%
     def grab_app_domain_name
@@ -23,15 +22,13 @@ export DOMAIN=<%= properties.domain %>
 export API_ENDPOINT=$SCHEME://api.$DOMAIN
 export APP_DOMAIN=<%="#{app_domain}" %>
 export APP_NAME=<%= properties.app_name %>
-export APP_VERSION=<%= properties.app_version %>
-export APP_URI=<%= properties.app_uri %>
 export ENABLE_GLOBAL_ACCESS=<%= properties.enable_global_access_to_plans %>
-export ORG=${APP_NAME}-service-org
-export SPACE=${APP_NAME}-service-space
-export BROKER_NAME=${APP_NAME}-${APP_VERSION}-service-broker
+export ORG=<%= properties.organization %>
+export SPACE=<%= properties.space %>
+export BROKER_NAME=${APP_NAME}
 export SECURITY_USERNAME=<%= properties.security_username %>
 export SECURITY_PASSWORD=<%= properties.security_password %>
-export BROKER_HOST=$SCHEME://${APP_URI}.${APP_DOMAIN}
+export BROKER_HOST=$SCHEME://${APP_NAME}.${APP_DOMAIN}
 
 # Use this only when there are already inbuild services that need to enabled for public
 export BROKER_INTERNAL_SERVICE_NAMES=<%= properties.internal_service_names %>
@@ -84,4 +81,3 @@ register_broker
 <% if  properties.enable_global_access_to_plans %>
   publicize_services
 <% end %>
-

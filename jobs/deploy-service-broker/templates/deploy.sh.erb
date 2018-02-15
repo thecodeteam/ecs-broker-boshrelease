@@ -28,13 +28,10 @@ export APP_DOMAIN=<%="#{app_domain}"%>
 export API_ENDPOINT=$SCHEME://api.${DOMAIN}
 export APP_NAME=<%= properties.app_name %>
 export APP_URI=<%= properties.app_uri %>
-<%# TODO customize org/space/quota in properties from tile %>
-export ORG=${APP_NAME}-service-org
-export SPACE=${APP_NAME}-service-space
 export QUOTA=${APP_NAME}-service-quota
+export CF_ORG=<%= properties.organization %>
+export CF_SPACE=<%= properties.space %>
 export CF_TARGET=$API_ENDPOINT
-export CF_ORG=$ORG
-export CF_SPACE=$SPACE
 export CF_USER=$ADMIN_USER
 export CF_PASSWORD=$ADMIN_PASSWORD
 export CF_SKIP_SSL=<%= properties.ssl.skip_cert_verify %>
@@ -169,18 +166,6 @@ function push_app() {
       fi
     fi
   popd > /dev/null
-
-  <%#
-  pushd $PACKAGE_PATH
-    mkdir -p /var/vcap/data/tmp
-    export TMPDIR=/var/vcap/data/tmp
-
-    # TODO -- add back in the timeouts and quotas for the app push?  Or remove them from the errand props?
-
-    cf push ${APP_NAME} -p ${PACKAGE_PATH}/lib/${TARGET_APP}  -n ${APP_URI} -d ${APP_DOMAIN}  --no-start
-    cf logs ${APP_NAME} --recent
-  popd
-  %>
 }
 
 function handle_failed_blue_green_deploy() {
