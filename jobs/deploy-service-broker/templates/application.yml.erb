@@ -77,15 +77,6 @@ catalog:
 <% unless s.default_retention.to_s.empty? -%>
       default-retention: <%= s.default_retention %>
 <% end -%>
-<% unless s.quota_limit.to_s.empty? && s.quota_warn.to_s.empty? -%>
-      quota:
-<% unless s.quota_limit.to_s.empty? -%>
-        limit: <%= s.quota_limit %>
-<% end -%>
-<% unless s.quota_warn.to_s.empty? -%>
-        warn: <%= s.quota_warn %>
-<% end -%>
-<% end -%>
 <% unless s.domain_group_admins.to_s.empty? -%>
       domain-group-admins:
 <% s.domain_group_admins do |a| %>
