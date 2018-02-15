@@ -18,13 +18,13 @@ properties:
     description: 'UAA Client Secret'
   app_name:
     description: 'Name of the Service Broker Application'
-  app_version:
-    description: 'Version of the Service Broker Application'
-  app_uri:
-    description: 'Uri of the Service Broker Application'
   create_open_security_group:
     description: 'Open security group for the app to access outside'
     default: false
+  organization:
+    description: CF Organization in which to deploy the Broker App
+  space:
+    description: CF Space in which to deploy the Broker App
   org_quota:
     description: 'Org Memory Quota for the Service Broker Application'
     default: 1024
