@@ -1,7 +1,11 @@
-cf_cli/cf-cli_6.23.1_linux_x86-64.tgz:
-  size: 6692717
-  object_id: 6c2e620a-b1f7-4f0e-bf53-f80fa60c403a
-  sha: a195e99cae5ab17b453b0a0747508c8f3eee5cae
+cf_cli/autopilot_plugin.tgz:
+  size: 3739561
+  object_id: 43e16160-163e-4e65-5177-59bc5c99565a
+  sha: b03815744c0fe801508e4f9ccc6c3c442658ddd3
+cf_cli/cf-cli_6.34.1_linux_x86-64.tgz:
+  size: 5879397
+  object_id: 33a6b692-2a33-4765-6d04-bf02dd034635
+  sha: ab0ddec89deeacee58e26ae4469c683e61be2325
 ecs_service_broker/ecs-cf-service-broker.jar:
   size: 25979121
   object_id: c95e4bea-d295-4a1c-6c0a-c44e94626af3
