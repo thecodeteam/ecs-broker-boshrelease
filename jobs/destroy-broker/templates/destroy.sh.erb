@@ -22,8 +22,8 @@ export DOMAIN=<%= properties.domain %>
 export API_ENDPOINT=$SCHEME://api.$DOMAIN
 export APP_DOMAIN=<%="#{app_domain}"%>
 export APP_NAME=<%= properties.app_name %>
-export ORG=<%= properties.organization %>
-export SPACE=<%= properties.space %>
+export ORG=<%= properties.app_organization %>
+export SPACE=<%= properties.app_space %>
 export BROKER_NAME=${APP_NAME}
 export BROKER_HOST=$SCHEME://${APP_NAME}.${APP_DOMAIN}
 

@@ -13,9 +13,9 @@ properties:
     description: 'CloudFoundry application domains'
   app_name:
     description: 'Name of the Service Broker Application'
-  organization:
+  app_organization:
     description: CF Organization in which to deploy the Broker App
-  space:
+  app_space:
     description: CF Space in which to deploy the Broker App
   enable_global_access_to_plans:
     description: 'Enable global access to all service plans'

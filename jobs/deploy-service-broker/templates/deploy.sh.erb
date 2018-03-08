@@ -1,19 +1,20 @@
 #!/bin/bash -exu
 
 <%# TODO support variable instance count %>
-  <%
-    def grab_app_domain_name
-      app_domains_str = properties.app_domains.to_s
-      array_start = ( app_domains_str =~ /^\[/ )
-      if (array_start == 0)
-        app_domain_entry = app_domains_str.gsub(/^\[/, '').gsub(/\]/,'').gsub(/,.*/, '')
-      else
-        app_domain_entry = app_domains_str
-      end
-      app_domain_entry
+
+<%
+  def grab_app_domain_name
+    app_domains_str = properties.app_domains.to_s
+    array_start = ( app_domains_str =~ /^\[/ )
+    if (array_start == 0)
+      app_domain_entry = app_domains_str.gsub(/^\[/, '').gsub(/\]/,'').gsub(/,.*/, '')
+    else
+      app_domain_entry = app_domains_str
     end
-    app_domain = grab_app_domain_name
-  -%>
+    app_domain_entry
+  end
+  app_domain = grab_app_domain_name
+-%>
 
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -27,10 +28,9 @@ export DOMAIN=<%= properties.domain %>
 export APP_DOMAIN=<%="#{app_domain}"%>
 export API_ENDPOINT=$SCHEME://api.${DOMAIN}
 export APP_NAME=<%= properties.app_name %>
-export APP_URI=<%= properties.app_uri %>
 export QUOTA=${APP_NAME}-service-quota
-export CF_ORG=<%= properties.organization %>
-export CF_SPACE=<%= properties.space %>
+export ORG=<%= properties.app_organization %>
+export SPACE=<%= properties.app_space %>
 export CF_TARGET=$API_ENDPOINT
 export CF_USER=$ADMIN_USER
 export CF_PASSWORD=$ADMIN_PASSWORD
@@ -107,7 +107,7 @@ function restart_app() {
 function wait_till_running() {
   for i in `seq 1  6`
   do
-    CF_TRACE=true cf app ${APP_NAME} | grep RUNNING | grep ${APP_NAME}
+    CF_TRACE=true cf app ${APP_NAME} | grep running | grep ${APP_NAME}
     if [ "$?" -ne "0" ]; then
       log_debug "App not running yet..."
       sleep 10
@@ -119,8 +119,6 @@ function wait_till_running() {
 }
 
 function modify_app() {
-  pushd $PACKAGE_PATH/$SUBDIR
-
   mkdir -p ${EXPLODED_APP_FOLDER}
 
   cd ${EXPLODED_APP_FOLDER}
@@ -128,8 +126,6 @@ function modify_app() {
   cp "$SCRIPT_PATH/../ecs_cert.pem" ecs_cert.pem
   cp "$SCRIPT_PATH/../application.yml" application.yml
   zip -r ${PACKAGE_PATH}/lib/${TARGET_APP} *
-
-  popd
 }
 
 function push_app() {
@@ -146,7 +142,7 @@ function push_app() {
 
     if [[ $exit_code -ne 0 ]]; then
       set +e
-        cf push -i 1
+        cf push "${APP_NAME}" -p ${PACKAGE_PATH}/lib/${TARGET_APP}  -d ${APP_DOMAIN}
         exit_code=$?
       set -e
 
@@ -158,7 +154,8 @@ function push_app() {
     else
       cf install-plugin /var/vcap/packages/cf_cli/plugins/autopilot -f
       set +e
-        cf zero-downtime-push "${APP_NAME}" -f manifest.yml -p "${PWD}"
+        cf "${APP_NAME}" -f manifest.yml
+        cf zero-downtime-push "${APP_NAME}" -p ${PACKAGE_PATH}/lib/${TARGET_APP}
         exit_code=$?
       set -e
       if [[ $exit_code -ne 0 ]]; then

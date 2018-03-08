@@ -4,6 +4,7 @@ templates:
   deploy.sh.erb: bin/run
   ecs_cert.pem.erb: ecs_cert.pem
   application.yml.erb: application.yml
+  manifest.yml.erb: manifest.yml
 packages:
 - cf_cli
 - ecs_service_broker
@@ -21,9 +22,9 @@ properties:
   create_open_security_group:
     description: 'Open security group for the app to access outside'
     default: false
-  organization:
+  app_organization:
     description: CF Organization in which to deploy the Broker App
-  space:
+  app_space:
     description: CF Space in which to deploy the Broker App
   org_quota:
     description: 'Org Memory Quota for the Service Broker Application'

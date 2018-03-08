@@ -1,0 +1,23 @@
+---
+<%
+  def grab_app_domain_name
+    app_domains_str = properties.app_domains.to_s
+    array_start = ( app_domains_str =~ /^\[/ )
+    if (array_start == 0)
+      app_domain_entry = app_domains_str.gsub(/^\[/, '').gsub(/\]/,'').gsub(/,.*/, '')
+    else
+      app_domain_entry = app_domains_str
+    end
+    app_domain_entry
+  end
+  app_domain = grab_app_domain_name
+-%>
+
+applications:
+  - name: <%= properties.app_name %>
+    command: bin/notifications
+    memory: 1G
+    domain: "<%= app_domain %>"
+    host: <%= properties.app_name %>
+    path: /var/vcap/packages/ecs_service_broker/ecs-cf-service-broker.jar
+    instances: 1
