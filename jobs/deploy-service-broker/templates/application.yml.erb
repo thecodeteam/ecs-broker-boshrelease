@@ -35,7 +35,7 @@ broker:
   prefix: <%= properties.prefix %>
 <% end -%>
   repository-service-id: <%= repo_svc.service_guid %>
-  repository-plan-id: <%= repo_plan.plan_guid %>
+  repository-plan-id: <%= repo_plan.guid %>
 security:
   <%= properties.security_username %>:
     password: <%= properties.security_password %>
@@ -76,15 +76,6 @@ catalog:
 <% end -%>
 <% unless s.default_retention.to_s.empty? -%>
       default-retention: <%= s.default_retention %>
-<% end -%>
-<% unless s.quota_limit.to_s.empty? && s.quota_warn.to_s.empty? -%>
-      quota:
-<% unless s.quota_limit.to_s.empty? -%>
-        limit: <%= s.quota_limit %>
-<% end -%>
-<% unless s.quota_warn.to_s.empty? -%>
-        warn: <%= s.quota_warn %>
-<% end -%>
 <% end -%>
 <% unless s.domain_group_admins.to_s.empty? -%>
       domain-group-admins:
@@ -127,7 +118,7 @@ catalog:
 <% unless s.plans.empty? -%>
     plans:
 <% s.plans.each do |p| -%>
-    - id: <%= p.plan_guid %>
+    - id: <%= p.guid %>
       name: <%= p.name %>
       description: <%= p.description %>
       free: <%= p.free %>

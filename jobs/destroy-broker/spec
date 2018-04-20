@@ -13,10 +13,10 @@ properties:
     description: 'CloudFoundry application domains'
   app_name:
     description: 'App Name'
-  app_version:
-    description: 'Version of the Service Broker Application'
-  app_uri:
-    description: 'Uri of the Service Broker Application'
+  app_organization:
+    description: CF Organization in which to deploy the Broker App
+  app_space:
+    description: CF Space in which to deploy the Broker App
   cf.admin_user:
     description: 'Username of the CF admin user'
   cf.admin_password:
