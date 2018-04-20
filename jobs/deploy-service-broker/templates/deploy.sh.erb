@@ -107,11 +107,12 @@ function restart_app() {
 function wait_till_running() {
   for i in `seq 1  6`
   do
-    CF_TRACE=true cf app ${APP_NAME} | grep running | grep ${APP_NAME}
+    CF_TRACE=true cf app ${APP_NAME} | grep running
     if [ "$?" -ne "0" ]; then
       log_debug "App not running yet..."
       sleep 10
     else
+      DEPLOYMENT_STATUS=0
       log_debug "App now up and running ..."
       break
     fi
@@ -154,8 +155,7 @@ function push_app() {
     else
       cf install-plugin /var/vcap/packages/cf_cli/plugins/autopilot -f
       set +e
-        cf "${APP_NAME}" -f manifest.yml
-        cf zero-downtime-push "${APP_NAME}" -p ${PACKAGE_PATH}/lib/${TARGET_APP}
+        cf zero-downtime-push "${APP_NAME}" -f manifest.yml -p ${PACKAGE_PATH}/lib/${TARGET_APP}
         exit_code=$?
       set -e
       if [[ $exit_code -ne 0 ]]; then
